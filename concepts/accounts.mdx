@@ -1,0 +1,45 @@
+---
+title: "Accounts"
+description: "Named containers that hold a balance — the fundamental unit of financial modelling in Recontrol."
+---
+
+An account is a named container with a running balance. Everything you track financially — a bank account, a credit card, your salary, your grocery spend — is represented as an account. Balances change only when transactions flow in or out.
+
+There are no magic numbers in Recontrol. Every balance you see is the sum of all transactions involving that account, computed from scratch on the transaction history. If the history is correct, the balance is correct.
+
+## The four account types
+
+Recontrol maps to the standard accounting categories:
+
+<CardGroup cols={2}>
+  <Card title="Asset" icon="piggy-bank">
+    Something you **own**. Its balance represents value that belongs to you.
+
+    **Examples:** Current account, savings account, cash wallet, fixed deposit.
+  </Card>
+  <Card title="Liability" icon="credit-card">
+    Something you **owe**. Its balance represents debt.
+
+    **Examples:** Credit card, bank loan, money owed to a friend.
+  </Card>
+  <Card title="Income" icon="money-bill-trend-up">
+    A **source of money**. Money flows from income accounts into assets when you earn.
+
+    **Examples:** Salary, freelance income, rental income, interest.
+  </Card>
+  <Card title="Expense" icon="cart-shopping">
+    A **spending category**. Money flows into expense accounts when you spend.
+
+    **Examples:** Groceries, rent, utilities, dining out, fuel.
+  </Card>
+</CardGroup>
+
+Together, assets and liabilities describe your net worth. Income and expense accounts describe your cash flow.
+
+## The Unspecified account
+
+Every space includes an **Unspecified** account created automatically. It absorbs one side of a transaction when only one account is relevant — for example, recording a salary deposit without specifying an income source. It keeps the ledger balanced without forcing you to model every account upfront.
+
+---
+
+For practical details — how to create, edit, and delete accounts — see [Features: Accounts](/features/accounts).

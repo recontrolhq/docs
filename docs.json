@@ -1,11 +1,17 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "palm",
+  "theme": "aspen",
   "name": "Recontrol",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#171717",
+    "light": "#FAFAFA",
+    "dark": "#171717"
+  },
+  "background": {
+    "color": {
+      "light": "#FFFFFF",
+      "dark": "#0A0A0A"
+    }
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -24,16 +30,20 @@
             "group": "Features",
             "pages": [
               "features/accounts",
-              "features/transactions",
               "features/spaces",
               "features/insights",
-              "features/access-control"
+              "features/collaboration",
+              "features/budgets",
+              "features/splitting"
             ]
           },
           {
             "group": "Concepts",
             "pages": [
-              "concepts/double-entry"
+              "concepts/accounts",
+              "concepts/transactions",
+              "concepts/double-entry",
+              "concepts/spaces"
             ]
           }
         ]
@@ -44,7 +54,9 @@
           {
             "group": "Help",
             "pages": [
-              "support"
+              "support/faq",
+              "support/contact",
+              "support/account"
             ]
           }
         ]
@@ -57,8 +69,16 @@
             "pages": [
               "legal/privacy",
               "legal/terms",
-              "legal/delete-data",
               "legal/licenses"
+            ]
+          },
+          {
+            "group": "Data",
+            "pages": [
+              "data/storing",
+              "data/security",
+              "data/rights",
+              "data/delete"
             ]
           }
         ]
@@ -67,39 +87,25 @@
     "global": {
       "anchors": [
         {
-          "anchor": "App Store",
+          "anchor": "Download for iOS",
           "href": "#",
           "icon": "apple"
         },
         {
-          "anchor": "Google Play",
+          "anchor": "Download for Android",
           "href": "#",
           "icon": "google-play"
-        },
-        {
-          "anchor": "Support",
-          "href": "mailto:support@recontrol.money",
-          "icon": "envelope"
         }
       ]
     }
   },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
   "navbar": {
     "links": [
       {
-        "label": "Support",
+        "label": "Contact Us",
         "href": "mailto:support@recontrol.money"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Download",
-      "href": "#"
-    }
+    ]
   },
   "footer": {}
 }

@@ -1,0 +1,79 @@
+---
+title: "What we store"
+description: "A plain-language breakdown of every type of data Recontrol holds, and what we do with it."
+---
+
+## Data you provide directly
+
+| Data | Details | Why |
+|---|---|---|
+| **Email address** | Required at sign-up | Account creation and authentication |
+| **Display name** | Set during sign-up | Identifying you within shared spaces |
+| **Password** | Stored as a one-way hash — we cannot read it | Authentication |
+| **Phone number** | Optional | Passwordless login and account security |
+| **Financial account names and types** | Accounts you create (assets, liabilities, income, expenses) | Core functionality |
+| **Transaction data** | Amounts, descriptions, timestamps, from/to accounts | Core functionality |
+| **Space names** | Names of spaces you create or join | Collaborative workspace management |
+| **Currency preference** | Your chosen display currency per space | Display formatting |
+| **Support messages** | Emails you send to support@recontrol.money | Customer support |
+
+## Data collected automatically
+
+| Data | Details | Why |
+|---|---|---|
+| **Authentication tokens** | JWT access tokens and refresh tokens | Session management |
+| **Session identifiers** | Login timestamps and session IDs | Security |
+| **Basic request metadata** | IP address, user-agent string, request timestamps | Server operation, security monitoring, debugging |
+| **Server-side metrics** | API response times, error rates (via OpenTelemetry and Prometheus) | Infrastructure monitoring — server-side only, not linked to you personally |
+
+The app contains **no client-side analytics SDK, no crash-reporting SDK, and no user behaviour tracking**. We do not know which screens you visit or which buttons you tap.
+
+## Data we do not collect
+
+- Location (precise or approximate)
+- Device contacts or address book
+- Photos or camera access
+- Advertising identifiers (IDFA or similar)
+- Bank credentials or account numbers
+- Biometric data
+
+## Where your data lives
+
+All data is stored on **Amazon Web Services (AWS) in the ap-south-1 (Mumbai, India) region**. It does not leave India.
+
+## Third-party services
+
+| Service | Provider | What they receive | Purpose |
+|---|---|---|---|
+| **Nhost** | Nhost | Email, password hash, display name, phone number, session tokens, financial data | Authentication, database hosting (PostgreSQL via Hasura), backend infrastructure |
+| **AWS** (via Nhost) | Amazon | All data stored and transmitted through the service (encrypted at rest and in transit) | Cloud infrastructure in Mumbai, India |
+
+We use no third-party advertising services, analytics SDKs, social media pixels, or data brokers.
+
+## Local storage on your device
+
+The mobile app uses:
+
+- **Expo Secure Store** — stores authentication tokens using iOS Keychain / Android Keystore. Not accessible to other apps.
+- **AsyncStorage** — persists session state locally.
+
+These are used solely to keep you logged in. They are not used for tracking.
+
+The web app uses session storage and local storage for your authentication session only. No tracking cookies.
+
+## How long we keep it
+
+| Data type | Retention |
+|---|---|
+| Account and profile data | Until you delete your account |
+| Financial data (accounts, transactions) | Until you delete your account |
+| Authentication tokens | Short-lived; expire automatically. Invalidated on logout or deletion. |
+| Session data | Duration of the active session |
+| Server-side operational metrics | Up to 12 months, then deleted or anonymised. Not linked to individual users. |
+| Support communications | Up to 24 months after last communication |
+
+## Who can see your data within shared spaces
+
+When you join a shared space, other members of that space can see the financial data within it — accounts and transactions — in accordance with their assigned role. Your display name and email may also be visible to other members of any space you belong to.
+
+Data in one space is never visible to members of a different space.

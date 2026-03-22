@@ -1,86 +1,47 @@
 ---
-title: "Recontrol"
-description: "Know exactly where your money is, where it came from, and where it went."
+title: "Our Story"
+description: "Recontrol is a money modelling engine built out of frustration. Manual-first, private, and designed for shared use."
 ---
 
-<div style={{ textAlign: 'center', padding: '2rem 0 1rem' }}>
-  <h1 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>Take charge of your finances</h1>
-  <p style={{ fontSize: '1.2rem', color: '#6b7280', maxWidth: '560px', margin: '0 auto 2rem' }}>
-    Recontrol is a personal and collaborative finance tracker built on double-entry bookkeeping — the same method used by every serious accounting system. Your balances are always accurate, always explainable.
-  </p>
-  <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-    <a href="#" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#16A34A', color: '#fff', padding: '0.75rem 1.5rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600 }}>Download on the App Store</a>
-    <a href="#" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#16A34A', color: '#fff', padding: '0.75rem 1.5rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600 }}>Get it on Google Play</a>
-  </div>
-</div>
+We tried hundreds of money apps before building this one. Seriously — hundreds. Across every platform, price point, and philosophy.
 
----
+Almost all of them had the same problems.
 
-## What you can do with Recontrol
+**No single product got the full picture right.** You could either track personal spending, or manage shared expenses, or see net worth, or run a budget — but rarely more than one of those in the same place, and never all of them together in a coherent model.
 
-<CardGroup cols={3}>
-  <Card title="Track every account" icon="wallet" href="/features/accounts">
-    Organise your cash, savings, loans, credit cards, and spending categories into a single balanced ledger.
-  </Card>
-  <Card title="Record transactions" icon="arrow-right-arrow-left" href="/features/transactions">
-    Every financial event records both sides — where money left and where it arrived — so your books never lie.
-  </Card>
-  <Card title="Shared spaces" icon="users" href="/features/spaces">
-    Create a shared workspace for your household or group. Everyone sees the same numbers, updated in real time.
-  </Card>
-  <Card title="Financial insights" icon="chart-line" href="/features/insights">
-    View balance history, compute totals and averages, filter by date range, and spot trends over time.
-  </Card>
-  <Card title="Access control" icon="shield-halved" href="/features/access-control">
-    Assign roles with granular permissions. Control exactly who can view, add, edit, or delete data in a space.
-  </Card>
-  <Card title="Double-entry bookkeeping" icon="scale-balanced" href="/concepts/double-entry">
-    The accounting method that makes phantom balances impossible. Understand why it works — and why it matters.
-  </Card>
-</CardGroup>
+The **UI was bad**. Cluttered dashboards, inconsistent flows, gestures that made no sense, screens that surfaced the wrong information at the wrong time. Apps that felt like they were designed by an accountant for an accountant, not for a person who just wants to know where their money went.
 
----
+The worst part was how most apps **confused the data model entirely**. An outgoing transaction was treated as an expense by default. An incoming one was income. But that is not how money actually works. Paying off a credit card is not an expense — it is a transfer from an asset to a liability. Receiving a loan is not income — it is an increase in both an asset and a liability simultaneously. Nobody was making the distinction between expenses and liabilities, or between income and assets. The books looked fine until they didn't, and you could never quite trust the numbers.
 
-## How it works
+Recontrol exists because we got fed up with that.
 
-<Steps>
-  <Step title="Create an account">
-    Sign up with your email or Apple ID. A personal space is created for you automatically.
-  </Step>
-  <Step title="Add your financial accounts">
-    Create accounts for each asset, liability, income source, and spending category you want to track. Set opening balances to start from where you are today.
-  </Step>
-  <Step title="Record transactions">
-    Every time money moves, add a transaction. Recontrol records both sides — from which account, to which account — and keeps every balance mathematically correct.
-  </Step>
-</Steps>
+It uses double-entry bookkeeping — the same method banks and accountants have used for centuries — so every transaction is recorded correctly by construction. An expense is a spending category. A liability is a debt. They are not the same thing, and the app never pretends they are.
 
----
-
-## Built for clarity, not complexity
+It does a small number of things. It does them well. That is the whole point.
 
 <CardGroup cols={2}>
-  <Card title="No bank connections" icon="lock">
-    Recontrol never asks for bank credentials. All data is entered manually — you stay in full control.
+  <Card title="Assets" icon="piggy-bank" href="/features/accounts">
+    Everything you own — cash, savings accounts, investments, and property. Assets hold positive value and grow as you earn and save.
   </Card>
-  <Card title="No ads, ever" icon="ban">
-    There is no ad network, no data broker, no monetisation through your information. You pay nothing and nothing is sold.
+  <Card title="Liabilities" icon="credit-card" href="/features/accounts">
+    Everything you owe — credit cards, loans, and outstanding debts. Liabilities reduce your net worth and decrease as you repay them.
   </Card>
-  <Card title="Your data stays in India" icon="server">
-    All data is stored on servers in Mumbai, India (AWS ap-south-1). It never leaves Indian infrastructure.
+  <Card title="Income" icon="money-bill-trend-up" href="/features/accounts">
+    Where your money comes from — salary, freelance work, rental income, or interest. Track income sources to understand your earning patterns.
   </Card>
-  <Card title="Private by default" icon="eye-slash">
-    No analytics SDK, no crash-reporting SDK, no third-party tracking of any kind runs inside the app.
+  <Card title="Expenses" icon="cart-shopping" href="/features/accounts">
+    Where your money goes — groceries, rent, utilities, dining, and fuel. Breaking spending into categories reveals what your money actually funds.
+  </Card>
+  <Card title="Budgets" icon="sliders" href="/features/budgets">
+    Set spending limits per category and compare them against actuals. Know at a glance whether you are on track before the month ends.
+  </Card>
+  <Card title="Splitting & settlements" icon="handshake" href="/features/splitting">
+    Split shared expenses with anyone, track who owes what, and record settlements when debts are cleared.
+  </Card>
+  <Card title="Collaboration" icon="people-group" href="/features/collaboration">
+    Share a space with your household or group. Every member sees live balances, and role-based permissions keep the right people in control.
+  </Card>
+  <Card title="Insights" icon="chart-line" href="/features/insights">
+    Chart balance history, compute totals and averages, and filter by date range. Spot trends and make informed decisions with your own data.
   </Card>
 </CardGroup>
-
----
-
-<div style={{ textAlign: 'center', padding: '2rem 0' }}>
-  <h2>Ready to get started?</h2>
-  <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>Available on iOS and Android. Free to download.</p>
-  <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-    <a href="#" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#16A34A', color: '#fff', padding: '0.75rem 1.5rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600 }}>Download on the App Store</a>
-    <a href="#" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#16A34A', color: '#fff', padding: '0.75rem 1.5rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600 }}>Get it on Google Play</a>
-  </div>
-</div>
