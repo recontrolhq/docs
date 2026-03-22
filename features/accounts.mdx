@@ -1,0 +1,59 @@
+---
+title: "Accounts"
+description: "Named containers that hold a balance — the basic unit of financial tracking in Recontrol."
+---
+
+An account is the fundamental building block in Recontrol. Everything you track — your salary, your groceries, your savings — lives inside an account. Every transaction moves money between exactly two accounts, keeping the books perfectly balanced at all times.
+
+## Account types
+
+Recontrol organises accounts into four types that mirror standard accounting categories:
+
+<CardGroup cols={2}>
+  <Card title="Asset" icon="piggy-bank">
+    Something you **own**. Cash, bank savings, investments, a vehicle, property. The value belongs to you.
+
+    **Examples:** Current account, savings account, cash wallet, fixed deposit.
+  </Card>
+  <Card title="Liability" icon="credit-card">
+    Something you **owe**. Credit card balances, personal loans, home loans. The value is debt.
+
+    **Examples:** Credit card, bank loan, money owed to a friend.
+  </Card>
+  <Card title="Expense" icon="cart-shopping">
+    A **spending category**. Money flows into expense accounts when you spend. Tracking these lets you see where your money goes.
+
+    **Examples:** Groceries, rent, utilities, dining out, fuel.
+  </Card>
+  <Card title="Income" icon="money-bill-trend-up">
+    A **source of money**. Money flows from income accounts into your assets when you earn. Tracking these lets you see where your money comes from.
+
+    **Examples:** Salary, freelance income, rental income, interest.
+  </Card>
+</CardGroup>
+
+<Note>
+Every space also has an **Unspecified** account created automatically. It absorbs one side of a transaction when only one account is relevant — for example, recording a salary deposit without specifying an income source.
+</Note>
+
+## Opening balances
+
+When you create an account that already has an existing balance — such as a bank account you are adding to Recontrol for the first time — you can set an opening balance. Recontrol automatically creates an adjustment transaction behind the scenes to bring the account to that starting balance, keeping the ledger consistent from day one.
+
+## Balance history
+
+Every transaction you record updates the affected accounts' balances. Because Recontrol uses double-entry bookkeeping, you can look up the balance of any account at any point in time with mathematical certainty — not a calculated estimate, but an exact figure derived from the complete transaction history.
+
+Use the [Insights](/features/insights) feature to chart balance history over time and compute totals across account groups.
+
+## Managing accounts
+
+- **Create** an account from the Accounts tab. Choose a name, type, and optional opening balance.
+- **Edit** an account's name at any time. The type cannot be changed after creation.
+- **Delete** an account only when it has no transactions linked to it.
+
+## Relationships
+
+- Every account belongs to exactly one [Space](/features/spaces).
+- Accounts are referenced by [Transactions](/features/transactions) as the source (`from`) and destination (`to`).
+- Accounts accumulate [Insights](/features/insights) (balance snapshots per date) as transactions are added.

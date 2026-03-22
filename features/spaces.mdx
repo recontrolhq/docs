@@ -1,0 +1,50 @@
+---
+title: "Spaces"
+description: "Isolated workspaces that contain all financial data for a person or group."
+---
+
+A space is the top-level container for all financial activity in Recontrol. Every account, transaction, and balance record belongs to exactly one space. Spaces provide complete isolation — data in one space is entirely separate from data in any other.
+
+## Personal space
+
+When you sign up, Recontrol creates a **Personal** space for you automatically. This is your default workspace. You can begin adding accounts and recording transactions immediately.
+
+Your Personal space cannot be deleted. It is yours alone — no one else can be invited to it unless you explicitly create a shared space for that purpose.
+
+## Shared spaces
+
+You can create additional spaces and invite other people to join them. Shared spaces are designed for:
+
+- **Households** — track joint expenses and shared accounts together
+- **Partnerships** — manage finances for a business or project with co-founders
+- **Groups** — split and track expenses with flatmates, travel companions, or teams
+
+Every member of a shared space can see and interact with the space's data according to the [role and permissions](/features/access-control) they have been assigned.
+
+## Space isolation
+
+Spaces are fully isolated from each other:
+
+- An account in Space A is invisible to members of Space B (unless someone is a member of both).
+- A user's access level in one space says nothing about their access in another space.
+- Roles and permissions are always space-scoped — they apply only within the space they were defined.
+
+This makes it safe to manage a personal space and a shared household space from the same account, with no data leaking between them.
+
+## Creating and managing spaces
+
+- **Create** a new space from the Settings tab. You are automatically assigned the admin role.
+- **Invite** people to a space using their email address or phone number. See [Access control](/features/access-control).
+- **Delete** a space only if you are its admin and it is not your default Personal space. Deleting a space permanently removes all accounts and transactions within it.
+
+<Warning>
+Deleting a space is permanent and irreversible. All accounts, transactions, and balance history within that space are deleted immediately and cannot be recovered.
+</Warning>
+
+## Relationships
+
+- A space is created by one user (the owner), who is automatically an admin.
+- A space has many [Accounts](/features/accounts), including one automatically-created Unspecified account.
+- A space has many [Transactions](/features/transactions).
+- A space has many [Memberships](/features/access-control) — the users who belong to it and their roles.
+- A space has many pending [Invites](/features/access-control) — people who have been invited but have not yet joined.

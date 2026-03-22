@@ -1,0 +1,101 @@
+---
+title: "Double-entry bookkeeping"
+description: "The accounting method that makes phantom balances impossible — and why Recontrol is built on it."
+---
+
+## The problem with single-entry
+
+Most people track their finances the way they keep a diary: note when money comes in, note when it goes out, and trust the running total at the bottom. This is **single-entry** accounting.
+
+It feels simple, but it has a fatal flaw: **it has no way of knowing if the total is correct**.
+
+If you write down "spent ₹500 on groceries" you have recorded the expense, but you have not recorded which account that ₹500 left from. Over time, this creates a gap between what your spreadsheet says and what your bank actually shows. You cannot reconcile the two, because the data was never complete to begin with.
+
+The deeper problem is that money always moves *between* places. A single-entry record captures only the destination — it loses the origin. This means your balances cannot be verified, only trusted.
+
+## The double-entry answer
+
+Double-entry bookkeeping solves this by recording **both sides** of every financial movement:
+
+> Every transaction has a source account (where money leaves) and a destination account (where money arrives). The amount leaving one always equals the amount arriving at the other.
+
+This creates a constraint that makes corruption impossible: the books can only balance if every transaction is complete. If something is missing, the imbalance is detectable.
+
+```
+You buy groceries for ₹500 using your debit card
+
+  From: Current Account    -₹500
+    To: Groceries          +₹500
+                           ─────
+                               0  ✓ Books balance
+```
+
+```
+Your salary of ₹75,000 arrives in your bank
+
+  From: Salary            -₹75,000
+    To: Current Account   +₹75,000
+                          ────────
+                                 0  ✓ Books balance
+```
+
+## Why this matters for you
+
+**Balances you can trust.** Because every transaction records both sides, Recontrol can reconstruct the exact balance of any account at any point in time — not an estimate, but a mathematically verifiable figure.
+
+**Instant reconciliation.** If your Current Account shows ₹12,400 in Recontrol and ₹12,400 in your bank statement, you know the records agree completely. There is no gap to explain.
+
+**A complete financial picture.** Because money always has a source and a destination, you can see not just what you spent, but what you spent *from* — and how that affected each account individually.
+
+## Debits and credits, plain language
+
+The words "debit" and "credit" carry centuries of accounting convention that can be confusing. In Recontrol, they map to a simpler mental model:
+
+| Journal term | What it means in Recontrol |
+|---|---|
+| **Debit** | The `from` account — money leaves here |
+| **Credit** | The `to` account — money arrives here |
+
+Every transaction in Recontrol has exactly one `from` account (debited) and one `to` account (credited). The debit amount always equals the credit amount. The books always balance.
+
+## A worked example
+
+Suppose you track three accounts:
+
+- **Current Account** (asset): ₹20,000
+- **Groceries** (expense): ₹0
+- **Salary** (income): ₹0
+
+**1 March — Salary received**
+
+| Account | Change | Balance |
+|---|---|---|
+| Salary (from) | −₹75,000 | −₹75,000 |
+| Current Account (to) | +₹75,000 | +₹95,000 |
+
+**5 March — Buy groceries**
+
+| Account | Change | Balance |
+|---|---|---|
+| Current Account (from) | −₹2,300 | +₹92,700 |
+| Groceries (to) | +₹2,300 | +₹2,300 |
+
+**12 March — Buy groceries again**
+
+| Account | Change | Balance |
+|---|---|---|
+| Current Account (from) | −₹1,800 | +₹90,900 |
+| Groceries (to) | +₹1,800 | +₹4,100 |
+
+**Result after three transactions:**
+- Current Account: ₹90,900 — exactly what your bank should show
+- Total grocery spend this month: ₹4,100 — exact, no estimation needed
+- Salary earned: ₹75,000 — every rupee accounted for
+
+The sum across all accounts is always zero, because every debit has an equal credit. That's the guarantee double-entry provides.
+
+## Why Recontrol is built on this
+
+Most personal finance apps show you a dashboard of categories and a spending total. They look simple, but underneath they are single-entry — they cannot tell you whether the balance they show is actually correct.
+
+Recontrol uses double-entry because **financial data should be verifiable, not just convenient**. Your money deserves the same rigour that every business accountant applies as standard.

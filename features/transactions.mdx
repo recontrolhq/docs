@@ -1,0 +1,57 @@
+---
+title: "Transactions"
+description: "The record of every financial event — where money moved from, where it moved to, and when."
+---
+
+A transaction is how you record that money moved. In Recontrol, every transaction captures both sides of the movement: the account money left (the **from** account) and the account money entered (the **to** account). This is the foundation of [double-entry bookkeeping](/concepts/double-entry) — and why your balances are always accurate.
+
+## What a transaction records
+
+| Field | Description |
+|---|---|
+| **From account** | The account being debited — money leaves here |
+| **To account** | The account being credited — money arrives here |
+| **Amount** | How much money moved |
+| **Timestamp** | When the financial event occurred (not when you recorded it) |
+| **Description** | Optional free-text note explaining the event |
+
+## Common transaction patterns
+
+**Paying for groceries with a debit card**
+
+Money leaves your bank account (asset) and enters your groceries category (expense).
+- From: Current Account → To: Groceries
+
+**Receiving your salary**
+
+Money leaves your salary source (income) and enters your bank account (asset).
+- From: Salary → To: Current Account
+
+**Transferring between accounts**
+
+Money moves from one asset to another — withdrawing cash, or moving between bank accounts.
+- From: Savings Account → To: Cash Wallet
+
+**Paying a credit card bill**
+
+Money leaves your bank account (asset) and reduces your credit card balance (liability).
+- From: Current Account → To: Credit Card
+
+## Timestamp vs. entry time
+
+The timestamp on a transaction is the date and time the financial event happened — not when you added it to Recontrol. This matters because balance history is calculated based on the transaction timestamp. If you forgot to record a transaction from last week, you can back-date it and the historical balances will be correctly updated.
+
+## Editing and deleting transactions
+
+- **Edit** a transaction's amount, accounts, timestamp, or description at any time. Balance records for all affected accounts are automatically updated.
+- **Delete** a transaction to fully reverse its effect on all balances. This cannot be undone.
+
+## Adjustment transactions
+
+When you set an opening balance on an account, Recontrol automatically creates an **adjustment transaction** to initialise the balance. These are clearly labelled and work like any other transaction.
+
+## Relationships
+
+- Every transaction belongs to exactly one [Space](/features/spaces).
+- Transactions reference exactly two [Accounts](/features/accounts): a `from` account and a `to` account.
+- Transactions drive [Insights](/features/insights) — each transaction updates the balance history for both accounts it touches.

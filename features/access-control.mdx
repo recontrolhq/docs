@@ -1,0 +1,67 @@
+---
+title: "Access control"
+description: "Roles and permissions that govern who can do what inside a shared space."
+---
+
+When you share a space with other people, access control determines what each person can see and do. Recontrol uses a role-based system: permissions are assigned to roles, and roles are assigned to members. Changing a role's permissions instantly applies to everyone holding that role.
+
+## Default roles
+
+Every space is created with two built-in roles:
+
+| Role | Default permissions |
+|---|---|
+| **Admin** | Full access — can create, read, update, and delete everything in the space |
+| **Member** | Full access to accounts and transactions; read-only access to the space itself, memberships, and roles |
+
+The creator of a space is automatically assigned the admin role. People you invite are assigned the member role by default, but you can choose a different role when sending the invitation.
+
+## Permissions model
+
+Permissions are the individual access grants. Each permission is the combination of a **resource** and an **action**:
+
+| | Insert | Select | Update | Delete |
+|---|:---:|:---:|:---:|:---:|
+| **Spaces** | ✓ | ✓ | ✓ | ✓ |
+| **Accounts** | ✓ | ✓ | ✓ | ✓ |
+| **Transactions** | ✓ | ✓ | ✓ | ✓ |
+| **Memberships** | ✓ | ✓ | ✓ | ✓ |
+| **Roles** | ✓ | ✓ | ✓ | ✓ |
+
+A role holds any subset of these 20 possible permissions. There is no permission inheritance — a role has exactly the permissions assigned to it, nothing more.
+
+**Admin** holds all 20. **Member** holds all permissions for accounts and transactions, plus `select` for spaces, memberships, and roles.
+
+## Custom roles
+
+You can create custom roles with any combination of permissions. Use cases include:
+
+- **Viewer** — `select` only on accounts and transactions; no write access
+- **Bookkeeper** — full access to transactions but read-only on accounts
+- **Guest** — `select` on transactions only
+
+Custom roles take effect immediately for all current holders.
+
+<Note>
+A role cannot be deleted while any member or pending invite is assigned to it. Reassign or remove those members first.
+</Note>
+
+## Inviting people
+
+You can invite someone to a space using their **email address** or **phone number**. The invitation is sent and stored as a pending invite.
+
+- If the person already has a Recontrol account, they can accept the invitation immediately.
+- If the person does not yet have an account, the invitation waits. When they sign up with the same email or phone number, the invitation is automatically accepted and they are added to the space.
+
+Each invite assigns a role — the role the person will hold when they accept. You can cancel a pending invite at any time.
+
+## Responsibilities
+
+You are responsible for managing access to any space you create. Recontrol is not responsible for actions taken by members you have granted access to, including data created, edited, or deleted by those members.
+
+## Relationships
+
+- Roles belong to one [Space](/features/spaces).
+- Roles have many Permissions (any subset of 5 resources × 4 actions).
+- Memberships link a user to a space with a specific role.
+- Invites reference a space and a role; they resolve into a Membership when accepted.

@@ -1,0 +1,290 @@
+---
+title: "Privacy Policy"
+description: "How Recontrol collects, uses, and protects your personal information."
+---
+
+**Effective Date:** [Fill on publish day]
+**Last Updated:** [Fill on publish day]
+
+---
+
+## 1. Introduction
+
+Recontrol ("we," "us," "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, retain, and safeguard your personal information when you use the Recontrol mobile application (the "App") and all related services (collectively, the "Service").
+
+This Privacy Policy applies to all users of the Service, regardless of how you access it (mobile application, web application, or any other platform).
+
+By accessing or using the Service, you acknowledge that you have read and understood this Privacy Policy. If you do not agree with our data practices as described in this Privacy Policy, you should not access or use the Service.
+
+---
+
+## 2. Who we are
+
+Recontrol is a personal and collaborative finance management application that helps users track accounts, record transactions, and collaborate in shared workspaces.
+
+**Data Controller:**
+
+- **Name:** Mrinal Wahal (sole proprietorship)
+- **Email:** support@recontrol.money
+- **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016
+
+---
+
+## 3. Information we collect
+
+### 3.1 Information you provide directly
+
+| Data type | Details | Purpose |
+|---|---|---|
+| **Account registration** | Email address, display name, password | Account creation and authentication |
+| **Phone number** (optional) | If provided for passwordless login | Authentication and account security |
+| **Financial account data** | Account names, account types, account balances | Core Service functionality |
+| **Transaction data** | Amounts, descriptions, timestamps, source and destination accounts | Core Service functionality |
+| **Space information** | Space names and organisational data | Collaborative workspace management |
+| **Currency preference** | Your selected display currency | Display formatting |
+| **Support communications** | Messages you send to us | Customer support and Service improvement |
+
+### 3.2 Information collected automatically
+
+| Data type | Details | Purpose |
+|---|---|---|
+| **Authentication tokens** | JSON Web Tokens (JWT), access tokens, refresh tokens | Session management and authentication |
+| **Session information** | Session identifiers, login timestamps | Security and session management |
+| **Basic request metadata** | IP address, user-agent string, request timestamps | Server operation, security monitoring, debugging |
+| **Server-side operational data** | Backend performance metrics, API response times, server error logs | Infrastructure monitoring and debugging via OpenTelemetry and Prometheus — server-side only |
+
+**Note:** The App does not integrate any client-side analytics SDK, crash-reporting SDK, or user behaviour tracking tool. We do not track which screens you visit, which buttons you tap, or how you navigate the App.
+
+### 3.3 Information we do not collect
+
+- **Location data** — we do not collect precise or approximate location
+- **Contacts** — we do not access your device address book
+- **Photos or media** — we do not access your camera or photo library
+- **Advertising identifiers** — we do not collect IDFA or any advertising identifier
+- **Bank credentials** — Recontrol is a manual tracker; it never connects to your bank
+- **Biometric data** — we do not collect fingerprint, face, or other biometric data
+
+---
+
+## 4. How we use your information
+
+- Creating and managing your user account
+- Authenticating your identity and managing sessions
+- Enabling you to create, view, edit, and delete financial accounts, transactions, and Spaces
+- Enabling collaborative features, including memberships, roles, and permissions
+- Providing customer support
+- Identifying and fixing bugs and performance issues
+- Detecting and preventing unauthorised access and abuse
+- Complying with applicable law
+- Sending essential service communications (security alerts, policy updates)
+
+**We do not use your personal information for advertising, marketing to third parties, or building advertising profiles. We do not sell your personal information.**
+
+---
+
+## 5. How we share your information
+
+### 5.1 Service providers
+
+| Service provider | Data shared | Purpose |
+|---|---|---|
+| **Nhost** (Backend-as-a-Service) | Account data, authentication data, session tokens, email, display name, phone number, financial data | Authentication, user management, database hosting (PostgreSQL via Hasura), backend infrastructure |
+| **Amazon Web Services (AWS)** via Nhost | All data stored and transmitted through the Service | Cloud infrastructure, server hosting, data storage. Data is stored in **AWS ap-south-1 (Mumbai, India)**. |
+
+All data is stored in India. It does not leave Indian infrastructure.
+
+### 5.2 Collaborative Space members
+
+When you participate in a shared Space, other members of that Space may see the financial data within that Space (accounts, transactions) in accordance with the permissions assigned to their role. Your display name and email may be visible to other Space members.
+
+### 5.3 Legal requirements
+
+We may disclose your information if required to do so by law, court order, or other legal process initiated by competent authorities in India.
+
+### 5.4 Business transfers
+
+In the event of a merger, acquisition, or sale of assets, your personal information may be transferred as part of that transaction. We will notify you of any change in ownership.
+
+### 5.5 What we do not do
+
+- We do not sell your personal information to third parties
+- We do not share your data for advertising or marketing by third parties
+- We do not share your data with data brokers
+- We do not track you across other apps or websites
+
+---
+
+## 6. Data retention
+
+| Data type | Retention period |
+|---|---|
+| **Account and profile data** | Retained while your account is active. Deleted upon account deletion request — see Section 10. |
+| **Financial data** (accounts, transactions) | Retained while your account is active. Deleted upon account deletion request. |
+| **Authentication tokens** | Short-lived; expire automatically. Refresh tokens invalidated on logout or account deletion. |
+| **Session data** | Retained for the duration of the active session. Cleared on logout. |
+| **Server-side operational data** | Retained for up to 12 months for infrastructure monitoring, then deleted or anonymised. Not linked to individual user profiles. |
+| **Support communications** | Retained for up to 24 months after last communication. |
+
+---
+
+## 7. Data security
+
+We implement appropriate technical and organisational measures to protect your personal information:
+
+- **Encryption in transit:** All data is transmitted over TLS/HTTPS
+- **Encryption at rest:** Data stored in our databases is encrypted at rest using AES-256, provided by AWS
+- **Secure credential storage:** On mobile devices, authentication tokens are stored using platform-native secure storage (iOS Keychain / Android Keystore via Expo Secure Store)
+- **JWT authentication:** All API requests are authenticated using signed JSON Web Tokens
+- **Role-based access control:** Collaborative Spaces enforce granular permissions
+- **Input validation:** All API requests are validated using Protocol Buffer schema validation (protovalidate)
+- **Access controls:** Internal access to user data is restricted to authorised personnel on a need-to-know basis
+
+No method of transmission over the Internet is 100% secure. If you become aware of any security breach, please contact us immediately at support@recontrol.money.
+
+### 7.1 Data breach notification
+
+In the event of a personal data breach that poses a risk to users, we will notify affected users without undue delay and comply with applicable notification requirements under the Information Technology Act, 2000 and the Digital Personal Data Protection Act, 2023.
+
+---
+
+## 8. Data storage location
+
+All of your personal data is stored on Amazon Web Services infrastructure in the **ap-south-1 (Mumbai, India)** region. Your data does not leave India.
+
+---
+
+## 9. Your rights
+
+Under the Digital Personal Data Protection Act, 2023 (DPDP Act) and applicable Indian law, you have the following rights:
+
+- **Access:** Request a copy of the personal data we hold about you
+- **Correction:** Request correction of inaccurate or incomplete personal data
+- **Deletion:** Request deletion of your personal data (see Section 10)
+- **Data export:** Request a copy of your data in a portable format
+- **Withdraw consent:** Where processing is based on consent, withdraw your consent at any time
+
+To exercise any of these rights, you may:
+
+- Use the account settings within the App
+- Visit [https://recontrol.money/legal/delete-data](https://recontrol.money/legal/delete-data)
+- Email us at support@recontrol.money
+
+We will respond to your request within thirty (30) days.
+
+---
+
+## 10. Account deletion and data erasure
+
+### 10.1 How to delete your account
+
+You have the right to delete your account and all associated personal data at any time:
+
+- **In-app:** Navigate to **Settings → Delete Account** within the App
+- **Web form:** Visit [https://recontrol.money/legal/delete-data](https://recontrol.money/legal/delete-data)
+- **Email:** Send a deletion request to support@recontrol.money
+
+### 10.2 What gets deleted
+
+<Warning>
+**Deletion is permanent and irreversible. We do not maintain backups of user data. Once your deletion request is processed, your data cannot be recovered by you or by us under any circumstances.**
+</Warning>
+
+Upon processing your deletion request, we permanently delete:
+
+- Your user account and profile information (email, display name, phone number)
+- All financial accounts you created
+- All transactions you recorded
+- Your currency preferences and other settings
+- Your Space memberships and role assignments
+- Session tokens and authentication data
+
+### 10.3 Processing timeframe
+
+In-app deletions are processed immediately. Email requests are processed within **thirty (30) days** of receipt.
+
+### 10.4 Data that may be retained
+
+After account deletion, we may retain minimal data only where required by applicable Indian law (for example, fraud or abuse records required by law enforcement). We will not retain any data beyond what is legally mandated.
+
+### 10.5 Written confirmation
+
+You may request written confirmation that your data has been deleted by emailing support@recontrol.money.
+
+### 10.6 Effect on shared Spaces
+
+- Your membership will be removed from all Spaces
+- If you are the sole administrator of a Space, you must transfer ownership or delete the Space before account deletion can complete
+
+---
+
+## 11. Children's privacy
+
+The Service is not intended for users under the age of eighteen (18). We do not knowingly collect personal information from children under 18. If we become aware that we have collected personal information from a child under 18, we will take steps to delete that information promptly.
+
+If you are a parent or guardian and believe your child has provided us with personal information, please contact us at support@recontrol.money.
+
+---
+
+## 12. Third-party services
+
+| Service | Provider | Data processed | Purpose | Privacy policy |
+|---|---|---|---|---|
+| **Nhost** | Nhost | Email, password (hashed), display name, phone number, session data, auth tokens | Authentication, user management, database hosting | [nhost.io/privacy](https://nhost.io/privacy) |
+| **Amazon Web Services (AWS)** | Amazon (via Nhost) | All data stored and transmitted through the Service (encrypted at rest and in transit) | Cloud infrastructure, server hosting, data storage in Mumbai, India | [aws.amazon.com/privacy](https://aws.amazon.com/privacy/) |
+
+We do not integrate third-party advertising SDKs, analytics SDKs that track users across apps, or social media tracking pixels.
+
+---
+
+## 13. Cookies and local storage
+
+### 13.1 Mobile application
+
+The Recontrol mobile application does not use cookies. It uses:
+
+- **Expo Secure Store:** To securely store authentication credentials using platform-native secure storage (iOS Keychain / Android Keystore)
+- **AsyncStorage:** To persist session state locally on your device
+
+These are strictly necessary for the operation of the Service and are not used for tracking, analytics, or advertising.
+
+### 13.2 Web application
+
+The Recontrol web application uses:
+
+- **Session storage** and **local storage** to manage your authentication session
+
+We do not use third-party tracking cookies, advertising cookies, or analytics cookies.
+
+---
+
+## 14. Governing law
+
+This Privacy Policy is governed by and construed in accordance with the laws of India, including the **Digital Personal Data Protection Act, 2023 (DPDP Act)** and the **Information Technology Act, 2000 (IT Act)**. Any disputes arising under this Privacy Policy shall be subject to the jurisdiction of the courts of Ghaziabad, Uttar Pradesh, India.
+
+---
+
+## 15. Contact us
+
+If you have questions, concerns, or requests regarding this Privacy Policy:
+
+- **Email:** support@recontrol.money
+- **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016
+- **Data deletion requests:** [https://recontrol.money/legal/delete-data](https://recontrol.money/legal/delete-data)
+
+We will respond to all privacy-related inquiries within **thirty (30) days**.
+
+---
+
+## 16. Changes to this Privacy Policy
+
+We may update this Privacy Policy periodically. When we make material changes, we will:
+
+- Update the "Last Updated" date at the top of this policy
+- Provide notice within the App
+- Send an email notification for significant changes
+
+Your continued use of the Service after the effective date of any updated Privacy Policy constitutes your acceptance of the changes.
+
+---
+
+**By using Recontrol, you acknowledge that you have read and understood this Privacy Policy.**

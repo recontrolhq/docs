@@ -1,0 +1,47 @@
+---
+title: "Insights"
+description: "Balance history, totals, averages, and trends across any account or time range."
+---
+
+Insights give you a quantitative view of your financial history. Every transaction you record automatically updates the balance snapshot for the accounts it touches. Insights let you query those snapshots — over any date range, across any set of accounts — to understand how your finances have moved over time.
+
+## Balance history
+
+For every account, Recontrol maintains a running balance per calendar date. Each transaction updates the balance on the date it occurred (the transaction's timestamp). This means you can look up the exact balance of any account on any past date — not an approximation, but the precise figure derived from the complete transaction history.
+
+## Aggregate insights
+
+In addition to per-account balance history, Recontrol supports aggregate queries across a filtered set of accounts:
+
+| Aggregate | What it shows |
+|---|---|
+| **Sum** | Total balance across all selected accounts |
+| **Count** | Number of balance records in the selected range |
+| **Average** | Mean balance across selected accounts and dates |
+| **Min** | Lowest balance recorded in the selection |
+| **Max** | Highest balance recorded in the selection |
+
+**Example uses:**
+
+- Total current balance across all your asset accounts (your net assets)
+- Average monthly spend across all your expense accounts
+- Highest single-month balance in your savings account
+
+## Date range filtering
+
+All insights can be filtered by a start date, an end date, or both. This lets you answer questions like:
+
+- "How much did I spend on dining out in January?"
+- "What was my total savings balance at the end of last quarter?"
+- "What is my average income per month over the past year?"
+
+## How balances are computed
+
+Balances are computed incrementally — they are updated as transactions are created, edited, or deleted, rather than recalculated from scratch on every query. This keeps queries fast regardless of how many transactions exist in a space.
+
+Because Recontrol uses [double-entry bookkeeping](/concepts/double-entry), every transaction affects exactly two accounts. The debit side decreases one account's balance and the credit side increases another, ensuring the books always balance.
+
+## Relationships
+
+- Balance records belong to one [Account](/features/accounts).
+- Balance records are driven by [Transactions](/features/transactions) — creating, editing, or deleting a transaction updates the balance records for both accounts it touches.
