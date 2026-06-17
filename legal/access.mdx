@@ -1,0 +1,164 @@
+---
+title: "Access Controls Policy"
+description: "How access to Recontrol's systems and your data is granted, authenticated, authorised, and reviewed."
+---
+
+**Effective Date:** 18 June 2026
+**Last Updated:** 18 June 2026
+**Version:** 1.0
+**Review cycle:** Annually, or upon any significant change to systems or law
+
+---
+
+## 1. Purpose
+
+This Access Controls Policy defines how access to Recontrol's systems, applications, and data is requested, granted, authenticated, authorised, monitored, and revoked. Its goal is to ensure that only the right people and services have the right access to the right data — and nothing more.
+
+It implements the access-control expectations of **ISO/IEC 27001:2022** (Annex A controls A.5.15–A.5.18, A.8.2 and A.8.5) and supports the "reasonable security practices" required by the **Information Technology Act, 2000** and the SPDI Rules, 2011, and the security obligations of the **Digital Personal Data Protection Act, 2023**.
+
+This policy complements the [Information Security Policy](/legal/security), the [Data Retention and Disposal Policy](/legal/data), and the [Privacy Policy](/legal/privacy).
+
+---
+
+## 2. Scope
+
+This policy applies to:
+
+- **End-user access** to the Recontrol applications and to data within collaborative Spaces;
+- **Administrative / privileged access** to production systems (database, Hasura console, cloud platform, secrets); and
+- **Service and integration access**, including machine-to-machine tokens and third-party aggregator connections (Plaid, Zerodha).
+
+---
+
+## 3. Principles
+
+1. **Least privilege.** Every user, role, and service receives the minimum access necessary for its purpose.
+2. **Role-based access control (RBAC).** Permissions are assigned to roles, and roles to users — not to individuals ad hoc.
+3. **Need-to-know.** Access to personal and financial data is limited to where it is genuinely required.
+4. **Deny by default.** Access is denied unless explicitly granted; API endpoints require authentication by default.
+5. **Separation of duties / segregation of data.** Data in one Space is never accessible to members of another Space.
+6. **Accountability.** Actions are attributable to an authenticated identity.
+
+---
+
+## 4. Authentication
+
+### 4.1 User authentication methods
+
+Recontrol authenticates users through the Nhost authentication service. Supported methods include:
+
+- **Email and password**
+- **Passwordless email** one-time password / magic link
+- **SMS one-time password** (where a phone number is provided)
+- **Sign in with Apple**
+
+### 4.2 Credential security
+
+- Passwords are stored only as **one-way hashes**; Recontrol never stores or sees plaintext passwords.
+- One-time passwords are short-lived and single-use.
+- Users are responsible for keeping their credentials confidential and for using a strong, unique password.
+
+### 4.3 Tokens and sessions
+
+- On successful authentication, the client receives a signed **JSON Web Token (JWT)** plus a refresh token.
+- Every API request must present a valid JWT (`Bearer` scheme); requests without one are rejected by the authentication interceptor before any business logic runs.
+- Access tokens are short-lived; refresh tokens are invalidated on logout and on account deletion.
+- On mobile, tokens are held in platform-native secure storage (**iOS Keychain / Android Keystore**), never in plaintext app storage.
+
+### 4.4 Device-level protection
+
+Users may enable an optional **biometric app lock** (Face ID / fingerprint). This is verified on-device by the operating system; biometric data is never transmitted to Recontrol.
+
+---
+
+## 5. In-application authorisation (Spaces, roles, and permissions)
+
+Recontrol's collaborative model enforces authorisation at the data layer through **Spaces, roles, and permissions**.
+
+### 5.1 Spaces
+
+A **Space** is an isolated workspace. Data in a Space is visible only to that Space's members. The user who creates a Space is automatically its **administrator**.
+
+### 5.2 Roles and permissions
+
+- Permissions are expressed as a **resource × action** matrix — actions (**create, read, update, delete**) over resources (such as accounts, transactions, goals, memberships, and roles).
+- Administrators may create **custom roles** with any combination of permissions.
+- Two sensible defaults exist per Space: an **admin** role (full access) and a **member** role (full access to day-to-day financial data; read-only on administrative resources).
+- **Role changes take effect immediately** for all current holders.
+
+### 5.3 Membership lifecycle
+
+- Administrators invite members by email or phone number; invitations may wait for recipients who have not yet signed up.
+- Members may leave a Space at any time.
+- Administrators may change a member's role or remove a member.
+- A sole administrator must transfer ownership or delete the Space before deleting their account.
+
+---
+
+## 6. Privileged and administrative access
+
+- Administrative access to production systems (the database, the Hasura console, the cloud platform, and secrets) is restricted to the **Data Fiduciary / owner** and any explicitly authorised personnel, on a strict need-to-know basis.
+- Privileged credentials (for example, the Hasura admin secret and database credentials) are treated as high-value secrets: held only in protected environment configuration, never committed to source control, and never exposed to clients.
+- Administrative operations (such as schema migrations and data backfills) are performed through controlled, versioned, idempotent mechanisms rather than ad hoc production changes.
+- Privileged access is reviewed whenever responsibilities change.
+
+---
+
+## 7. Service, machine, and integration access
+
+### 7.1 Internal service authentication
+
+Automated internal calls — such as the scheduled job that refreshes connected bank data (which runs approximately every six hours) and event webhooks — are authenticated with a **shared webhook secret**, separate from user JWTs.
+
+### 7.2 Third-party integration access (user-authorised)
+
+When a user connects an external institution, access is granted by the **user**, directly with the provider, using the provider's authorisation flow:
+
+- **Plaid:** the user authorises through Plaid Link; Recontrol exchanges a one-time public token for a scoped access token (limited to the transactions product). Recontrol never receives the user's banking credentials.
+- **Zerodha (Kite Connect):** the user authorises through Zerodha's login; Recontrol exchanges a request token (with a signed checksum) for a daily access token. Recontrol never receives the user's brokerage credentials.
+
+Integration access tokens are **encrypted at rest (AES-256-GCM)**, are scoped to the connecting user and Space, and can be **revoked by the user at any time** by disconnecting — which revokes the token with the provider and deletes it from our systems. Zerodha tokens additionally expire daily.
+
+---
+
+## 8. User access lifecycle
+
+| Stage | What happens |
+|---|---|
+| **Onboarding / provisioning** | A user self-registers; a personal Space is created automatically. Space membership is granted by invitation. |
+| **Changes** | Role and permission changes within a Space are made by an administrator and take effect immediately. Privileged (admin) access changes are made deliberately and recorded. |
+| **Offboarding / deprovisioning** | Leaving a Space, being removed by an admin, or deleting an account removes the associated access. Account deletion invalidates tokens and cascades the removal of the user's data. |
+
+---
+
+## 9. Access reviews
+
+- **Privileged access** to production systems is reviewed periodically (and on any change of responsibilities) to confirm it is still required.
+- **Integration connections** are surfaced to users so they can review and revoke connected institutions at any time.
+- **This policy** is reviewed at least annually (Section 11).
+
+Reviews confirm that access remains aligned with least privilege and remove access that is no longer needed.
+
+---
+
+## 10. Responsibilities
+
+| Role | Responsibility |
+|---|---|
+| **Owner / Data Fiduciary** (Mrinal Wahal) | Owns this policy; controls privileged access; conducts access reviews |
+| **Space administrators** | Manage roles, permissions, and membership within their Spaces responsibly |
+| **All users** | Protect their credentials; use the app lock and a strong password; report suspected unauthorised access |
+
+---
+
+## 11. Review
+
+This policy is reviewed at least **annually**, and whenever there is a significant change to authentication, the authorisation model, integrations, or applicable law. Material changes are reflected in the "Last Updated" date and version above.
+
+---
+
+## 12. Contact
+
+- **Owner / Grievance Officer:** Mrinal Wahal
+- **Email:** support@recontrol.money
+- **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016

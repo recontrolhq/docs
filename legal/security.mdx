@@ -1,0 +1,190 @@
+---
+title: "Information Security Policy"
+description: "Recontrol's information security programme — the technical and organisational measures that protect your data."
+---
+
+**Effective Date:** 18 June 2026
+**Last Updated:** 18 June 2026
+**Version:** 1.0
+**Review cycle:** Annually, or upon any significant change to systems or law
+
+---
+
+## 1. Purpose
+
+This Information Security Policy describes the technical and organisational measures Recontrol uses to protect the confidentiality, integrity, and availability of the information we hold — in particular the financial data of our users.
+
+It serves as Recontrol's documented information security programme for the purposes of the "reasonable security practices and procedures" required by the **Information Technology Act, 2000** and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 (the "SPDI Rules"), and the security-safeguard obligations of the **Digital Personal Data Protection Act, 2023** (the "DPDP Act") and the **Digital Personal Data Protection Rules, 2025**.
+
+The programme is designed in alignment with **ISO/IEC 27001:2022** — the standard expressly recognised under the SPDI Rules as evidence of reasonable security practices — and, for media sanitization, **NIST SP 800-88**.
+
+---
+
+## 2. Scope
+
+This policy applies to:
+
+- All information processed by Recontrol, with particular care for **sensitive personal data or information** (which, under the SPDI Rules, includes **financial information** such as account balances, transactions, and holdings);
+- All systems that store or process that information — the mobile and web applications, the Go backend (Connect RPC), the Hasura GraphQL layer, the PostgreSQL database, and supporting cloud services (Nhost, AWS); and
+- All personnel and contractors with access to those systems.
+
+It works together with the [Access Controls Policy](/legal/access), the [Data Retention and Disposal Policy](/legal/data), and the [Privacy Policy](/legal/privacy).
+
+---
+
+## 3. Roles and responsibilities
+
+| Role | Responsibility |
+|---|---|
+| **Data Fiduciary / Owner** (Mrinal Wahal, sole proprietor) | Accountable for information security; approves this policy; owns risk decisions |
+| **Grievance Officer** (support@recontrol.money) | Point of contact for security and privacy concerns and breach reports from users |
+| **Anyone with system access** | Must comply with this policy, protect credentials, and report suspected incidents promptly |
+
+Because Recontrol is operated by a sole proprietor, these roles may be held by the same individual; the responsibilities nonetheless apply.
+
+---
+
+## 4. Risk management
+
+We take a risk-based approach. We identify the assets that hold personal data, assess the threats to them (e.g. unauthorised access, credential compromise, third-party breach), and apply controls commensurate with the sensitivity of the data and the nature of the business, as the SPDI Rules require. Risks and controls are reviewed at least annually and whenever the architecture changes materially (for example, when a new third-party integration is added).
+
+---
+
+## 5. Data classification
+
+| Class | Examples | Handling |
+|---|---|---|
+| **Sensitive (SPDI)** | Account balances, transactions, holdings, password hashes, integration tokens | Strongest controls: encryption in transit and at rest, least-privilege access, no logging of values |
+| **Personal** | Email, display name, phone number | Encrypted in transit and at rest; access restricted |
+| **Operational** | Aggregate metrics, error logs | Not linked to individuals; retained ≤ 12 months |
+| **Public** | Documentation, marketing | No restriction |
+
+---
+
+## 6. Access control
+
+Access to systems and data is governed by the principle of **least privilege** and **role-based access control**, detailed in the [Access Controls Policy](/legal/access). In summary:
+
+- Every API request is authenticated with a signed **JSON Web Token (JWT)**, validated server-side by an authentication interceptor before any handler runs.
+- Within collaborative Spaces, granular **role-based permissions** (create / read / update / delete across resources) determine what each member can do.
+- Internal/administrative access to production data is restricted to authorised personnel on a strict need-to-know basis.
+
+---
+
+## 7. Cryptography and key management
+
+| Control | Implementation |
+|---|---|
+| **Encryption in transit** | All client–server and server–service traffic uses TLS/HTTPS |
+| **Encryption at rest** | The database is encrypted at rest with **AES-256** (provided by AWS) |
+| **Application-level token encryption** | Plaid and Zerodha access tokens are encrypted with **AES-256-GCM** (authenticated encryption, random nonce per value) before being stored |
+| **Password storage** | Passwords are stored only as **one-way hashes** (handled by the Nhost authentication service); we never store or see plaintext passwords |
+| **Token signing** | JWTs are cryptographically signed and verified on every request |
+| **Webhook authentication** | Internal cron and event webhooks are authenticated with a shared secret |
+| **Key management** | Encryption keys and service secrets are held as protected environment configuration, never committed to source control, and are not exposed to clients |
+
+Deleting an encrypted integration token (with no backup retained) constitutes cryptographic erasure of that secret — see the [Data Retention and Disposal Policy](/legal/data).
+
+---
+
+## 8. Application security
+
+- **Input validation.** All API requests are validated against Protocol Buffer schemas using `protovalidate`, rejecting malformed or out-of-bounds input at the boundary.
+- **Authentication & authorisation.** Enforced centrally via interceptors (JWT validation) and RBAC checks in the service layer.
+- **No credential exposure.** The client never receives integration tokens; bank/broker authentication occurs directly between the user and the provider (Plaid / Zerodha).
+- **Secure defaults.** Endpoints are authenticated by default; only explicitly listed routes (e.g. health checks) are exempt.
+- **Dependency management.** Third-party dependencies are pinned (Go modules, JS lockfiles) and updated to address known vulnerabilities.
+
+---
+
+## 9. Infrastructure and network security
+
+- Recontrol runs on managed cloud infrastructure — **Nhost** on **AWS ap-south-1 (Mumbai, India)**.
+- The database (PostgreSQL) is accessed through the Hasura GraphQL layer and the backend service; it is not exposed directly to clients.
+- Connection pooling is configured with bounded lifetimes to limit resource exhaustion.
+- Secrets are provided via protected environment configuration and are not stored in the repository.
+- We rely on the certified physical, network, and platform security controls of AWS and Nhost (including ISO/IEC 27001 and SOC 2 programmes operated by those providers).
+
+---
+
+## 10. Logging and monitoring
+
+- Server-side observability uses **OpenTelemetry** and **Prometheus** for performance metrics, API timings, and error rates.
+- Logs are written with the discipline of **not recording sensitive personal data** (no plaintext tokens, passwords, or unnecessary financial detail).
+- Operational logs and telemetry are retained for no more than **12 months** and are not linked to individual user profiles.
+- The App contains **no** client-side analytics or behavioural-tracking SDKs.
+
+---
+
+## 11. Endpoint and device security
+
+- On mobile devices, authentication tokens are stored in platform-native secure storage (**iOS Keychain / Android Keystore** via Expo Secure Store).
+- The App offers an optional **biometric app lock** (Face ID / fingerprint). Biometric verification is performed entirely by the device's operating system; biometric data never reaches Recontrol.
+- Session state stored locally is cleared on logout or uninstall.
+
+---
+
+## 12. Third-party / supplier security
+
+We use a small, deliberately limited set of sub-processors, each with its own security and privacy programme:
+
+| Provider | Role | Assurance |
+|---|---|---|
+| **Nhost** | Auth, database hosting, backend platform | Provider security programme; data in AWS ap-south-1 |
+| **AWS** | Cloud infrastructure | ISO/IEC 27001, SOC 2, NIST-aligned media disposal |
+| **Plaid** | Bank-data aggregation (US/Canada, opt-in) | Regulated financial-data aggregator; governs its own data handling |
+| **Zerodha** (Kite Connect) | Investment-holdings aggregation (India, opt-in) | SEBI-regulated broker; governs its own data handling |
+
+New suppliers are assessed for their security posture before integration, and integrations are added to the risk review in Section 4. The data each provider processes is listed in the [Privacy Policy](/legal/privacy).
+
+---
+
+## 13. Secure development and change management
+
+- Source code is version-controlled; changes are made through reviewed commits.
+- Continuous integration runs automated tests; the codebase is covered by unit and integration tests (including an in-memory database for isolated testing).
+- Database schema changes are applied through **versioned migrations**; runtime data backfills run through a separate, idempotent migration mechanism so re-runs are safe.
+- Production changes are deliberate and traceable.
+
+---
+
+## 14. Data retention and disposal
+
+Personal data is retained only as long as necessary and disposed of securely, as set out in the [Data Retention and Disposal Policy](/legal/data). Recontrol keeps **no backups** of user data; account deletion cascades through the database and is irreversible.
+
+---
+
+## 15. Incident response and breach notification
+
+1. **Detect & contain.** On becoming aware of a suspected security incident, we act to contain it (e.g. revoke compromised credentials/tokens, isolate affected components).
+2. **Assess.** We assess the nature, scope, and likely impact, including which data principals and data categories are affected.
+3. **Notify.** Where a personal data breach has occurred, we notify the **Data Protection Board of India** and affected users in accordance with the DPDP Act and the DPDP Rules, 2025 — which require intimation to the Board and to affected data principals within the prescribed window (without undue delay, and within the timeline set by the Rules), and applicable requirements under the IT Act, 2000.
+4. **Remediate & learn.** We remediate root causes and update controls and this policy as needed.
+
+Users and researchers can report a suspected security issue at any time to **support@recontrol.money**.
+
+---
+
+## 16. Availability and continuity
+
+We rely on the resilience of our managed cloud providers for availability. Because we do not retain backups of user data, our continuity posture is built on provider durability and on the user's ability to re-import or re-enter data; users are made aware (in the Privacy Policy and deletion flows) that deletion is permanent and that no backup copy exists.
+
+---
+
+## 17. Awareness
+
+Any person granted access to Recontrol's systems is made aware of, and is required to follow, this policy and the [Access Controls Policy](/legal/access), including the duty to protect credentials and to report incidents.
+
+---
+
+## 18. Review
+
+This policy is reviewed at least **annually**, and after any significant change to systems, data flows, suppliers, or applicable law. The SPDI Rules also contemplate independent audit of security practices; we will undertake review or audit as appropriate to the scale of processing. Material changes are reflected in the "Last Updated" date and version above.
+
+---
+
+## 19. Contact
+
+- **Owner / Grievance Officer:** Mrinal Wahal
+- **Email:** support@recontrol.money
+- **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016

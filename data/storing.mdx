@@ -13,8 +13,9 @@ description: "A plain-language breakdown of every type of data Recontrol holds, 
 | **Phone number** | Optional | Passwordless login and account security |
 | **Financial account names and types** | Accounts you create (assets, liabilities, income, expenses) | Core functionality |
 | **Transaction data** | Amounts, descriptions, timestamps, from/to accounts | Core functionality |
+| **Goals** | Goal names, target amounts, target dates, linked accounts | Goal tracking |
 | **Space names** | Names of spaces you create or join | Collaborative workspace management |
-| **Currency preference** | Your chosen display currency per space | Display formatting |
+| **Currency preference** | Your chosen display currency per space | Display formatting and conversion |
 | **Support messages** | Emails you send to support@recontrol.money | Customer support |
 
 ## Data collected automatically
@@ -28,18 +29,37 @@ description: "A plain-language breakdown of every type of data Recontrol holds, 
 
 The app contains **no client-side analytics SDK, no crash-reporting SDK, and no user behaviour tracking**. We do not know which screens you visit or which buttons you tap.
 
+## Data from connected institutions (optional)
+
+<Note>
+Connected-account integrations (Plaid, Zerodha) are currently in **limited preview** and not yet generally available. The table below describes what they import once enabled. Until then, all data is entered manually.
+</Note>
+
+If you choose to connect an external financial account, we import data from it **on your behalf, with your consent**. These integrations are optional and inactive until you connect an account. We **never** receive your banking or brokerage login credentials.
+
+| Integration | What we import | Region |
+|---|---|---|
+| **Plaid** (banks) | Account names, types, last 4 digits of the account number, balances, currency, and up to 2 years of transactions (amount, date, description, merchant, pending status), plus your institution's name | United States & Canada |
+| **Zerodha** (Kite Connect) | Equity and mutual-fund holdings (ISIN, name, quantity, average price, last price, P&L) and your Zerodha user ID, name, and email | India |
+
+We store an access token for each connected integration so we can refresh your data. These tokens are **encrypted at rest using AES-256-GCM**, on top of the database's own encryption. You can disconnect at any time, which revokes and deletes the token. See [Security](/data/security).
+
 ## Data we do not collect
 
 - Location (precise or approximate)
 - Device contacts or address book
 - Photos or camera access
 - Advertising identifiers (IDFA or similar)
-- Bank credentials or account numbers
-- Biometric data
+- Your bank or brokerage login credentials (authentication is handled by Plaid / Zerodha — we never see them)
+- Biometric data (the optional app lock uses your device's on-device biometrics; the data never reaches us)
 
 ## Where your data lives
 
-All data is stored on **Amazon Web Services (AWS) in the ap-south-1 (Mumbai, India) region**. It does not leave India.
+Recontrol's database and backend are hosted on **Amazon Web Services (AWS) in the ap-south-1 (Mumbai, India) region**. The data you enter, and the data we import on your behalf, is stored in India.
+
+**If you are outside India** (including in the US or Canada), your data is transferred to and stored in India. We stay accountable for protecting it, but while it is in India it is subject to Indian law. See the [Privacy Policy](/legal/privacy#8-data-storage-location-and-international-data-transfers) for the full cross-border disclosure and your regional rights.
+
+**Plaid processing:** if you connect a bank using **Plaid**, your banking data is processed by Plaid on infrastructure in the **United States** before it reaches us in India. This only happens if you choose to use the bank-connection feature.
 
 ## Third-party services
 
@@ -47,6 +67,8 @@ All data is stored on **Amazon Web Services (AWS) in the ap-south-1 (Mumbai, Ind
 |---|---|---|---|
 | **Nhost** | Nhost | Email, password hash, display name, phone number, session tokens, financial data | Authentication, database hosting (PostgreSQL via Hasura), backend infrastructure |
 | **AWS** (via Nhost) | Amazon | All data stored and transmitted through the service (encrypted at rest and in transit) | Cloud infrastructure in Mumbai, India |
+| **Plaid** | Plaid Inc. | Bank account and transaction data — only if you connect a bank | Bank-account aggregation (US/Canada) |
+| **Zerodha** | Zerodha (Kite Connect) | Investment-holdings data — only if you connect Zerodha | Investment-holdings aggregation (India) |
 
 We use no third-party advertising services, analytics SDKs, social media pixels, or data brokers.
 
@@ -66,11 +88,15 @@ The web app uses session storage and local storage for your authentication sessi
 | Data type | Retention |
 |---|---|
 | Account and profile data | Until you delete your account |
-| Financial data (accounts, transactions) | Until you delete your account |
+| Financial data (accounts, transactions, goals) | Until you delete your account |
+| Imported data (bank accounts, transactions, holdings) | Until you delete it, disconnect the source, or delete your account |
+| Integration access tokens | Until you disconnect or delete your account; Zerodha tokens also expire daily |
 | Authentication tokens | Short-lived; expire automatically. Invalidated on logout or deletion. |
 | Session data | Duration of the active session |
 | Server-side operational metrics | Up to 12 months, then deleted or anonymised. Not linked to individual users. |
 | Support communications | Up to 24 months after last communication |
+
+See the [Data Retention and Disposal Policy](/legal/data) for full detail.
 
 ## Who can see your data within shared spaces
 

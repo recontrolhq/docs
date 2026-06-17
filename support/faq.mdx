@@ -9,7 +9,12 @@ Yes. Recontrol is currently free to download and use. If paid features are intro
 
 ## Does Recontrol connect to my bank?
 
-Not currently. Recontrol is a manual finance tracker — all data is entered by you. It does not ask for bank credentials or access your accounts. Automatic transaction tracking via bank or aggregator APIs is not available yet.
+Manual entry is always available and is the default. We are also building **optional** connections, currently in **limited preview** (not yet generally available):
+
+- **Banks (US & Canada)** via **Plaid** — import balances and transactions automatically.
+- **Investments (India)** via **Zerodha** (Kite Connect) — import your equity and mutual-fund holdings.
+
+These will be entirely opt-in. When you connect an account, you authenticate directly with the provider — **Recontrol never sees or stores your bank or brokerage login credentials**. You can disconnect at any time, which revokes and deletes the stored access token. See the [Privacy Policy](/legal/privacy) for exactly what is imported.
 
 ## Is my financial data private?
 
@@ -21,11 +26,11 @@ Go to **Settings** in the app and tap **Create Space**. Give the space a name, t
 
 ## Can I use Recontrol in multiple currencies?
 
-You can set a preferred display currency for each space. Recontrol does not perform currency conversion — it displays the figures you enter in the currency you select. You are responsible for entering amounts in the correct currency for each account.
+Yes. You can set a preferred display currency for each space, and Recontrol converts balances into that currency using exchange rates so your totals and net worth are shown in a single currency.
 
 ## What happens to my data if I delete my account?
 
-Account deletion is permanent and irreversible. All data associated with your account — including your profile, all financial accounts, all transactions, all space memberships, and all settings — is deleted from our servers. We do not retain backups. Once deletion is complete, your data cannot be recovered by you or by us under any circumstances.
+Account deletion is permanent and irreversible. All data associated with your account — including your profile, all financial accounts, all transactions, all goals, all data imported from connected institutions, all stored integration tokens (which are also revoked with the provider), all space memberships, and all settings — is deleted from our servers. We do not retain backups. Once deletion is complete, your data cannot be recovered by you or by us under any circumstances.
 
 See [Delete your data](/data/delete) for full details and step-by-step instructions.
 

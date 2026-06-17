@@ -3,8 +3,9 @@ title: "Privacy Policy"
 description: "How Recontrol collects, uses, and protects your personal information."
 ---
 
-**Effective Date:** 22 March 2026
-**Last Updated:** 22 March 2026
+**Effective Date:** 18 June 2026
+**Last Updated:** 18 June 2026
+**Supersedes:** version dated 22 March 2026
 
 ---
 
@@ -16,17 +17,21 @@ This Privacy Policy applies to all users of the Service, regardless of how you a
 
 By accessing or using the Service, you acknowledge that you have read and understood this Privacy Policy. If you do not agree with our data practices as described in this Privacy Policy, you should not access or use the Service.
 
+This policy should be read together with our [Terms of Service](/legal/terms), our [Information Security Policy](/legal/security), our [Data Retention and Disposal Policy](/legal/data), and our [Access Controls Policy](/legal/access).
+
 ---
 
 ## 2. Who we are
 
-Recontrol is a personal and collaborative finance management application that helps users track accounts, record transactions, and collaborate in shared workspaces.
+Recontrol is a personal and collaborative finance management application that helps users track accounts, record transactions, set financial goals, collaborate in shared workspaces, and — optionally — import balances, transactions, and investment holdings from connected financial institutions.
 
-**Data Controller:**
+**Data Controller / Data Fiduciary:**
 
 - **Name:** Mrinal Wahal (sole proprietorship)
 - **Email:** support@recontrol.money
 - **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016
+
+For the purposes of the Digital Personal Data Protection Act, 2023 (the "DPDP Act"), we are the **Data Fiduciary** in respect of the personal data we process about you. For users in **Canada**, the same individual is the **Privacy Officer** accountable for our personal-information practices under PIPEDA and Quebec's Law 25; for users in the **United States**, the same contact handles privacy-rights requests under the CCPA/CPRA and other state laws. Our contact details (one address for all privacy, grievance, and rights requests) are in Section 17. Region-specific rights are described in Section 10.
 
 ---
 
@@ -37,40 +42,96 @@ Recontrol is a personal and collaborative finance management application that he
 | Data type | Details | Purpose |
 |---|---|---|
 | **Account registration** | Email address, display name, password | Account creation and authentication |
-| **Phone number** (optional) | If provided for passwordless login | Authentication and account security |
+| **Phone number** (optional) | If provided for passwordless or SMS one-time-password login | Authentication and account security |
 | **Financial account data** | Account names, account types, account balances | Core Service functionality |
 | **Transaction data** | Amounts, descriptions, timestamps, source and destination accounts | Core Service functionality |
+| **Goals** | Goal names, target amounts, target dates, linked accounts | Financial goal tracking |
 | **Space information** | Space names and organisational data | Collaborative workspace management |
-| **Currency preference** | Your selected display currency | Display formatting |
+| **Currency preference** | Your selected display currency | Display formatting and currency conversion |
 | **Support communications** | Messages you send to us | Customer support and Service improvement |
 
-### 3.2 Information collected automatically
+### 3.2 Information from connected financial institutions (optional integrations)
+
+If — and only if — you choose to connect an external financial account, we receive data from that institution **on your behalf and with your consent**. These integrations are optional and inactive until you explicitly connect an account. See Section 4 for full detail.
+
+<Note>
+**Preview feature.** The connected-account integrations described below (Plaid and Zerodha) are currently in **limited preview** and are not yet generally available. The practices in this section describe how the integrations work and what data they involve **once you are able to enable them and choose to do so**. Until then, all data is entered manually and no banking or brokerage data is collected.
+</Note>
+
+| Source | Data we receive | Purpose |
+|---|---|---|
+| **Plaid** (bank connections — United States and Canada) | Account names, types and subtypes, the last four digits of the account number ("mask"), current balances and currency codes, transaction history (up to 730 days — amount, date, description, merchant name, pending status), and your financial institution's name | Automatically importing and refreshing your bank accounts and transactions |
+| **Zerodha** (investment holdings — India) | Equity and mutual-fund holdings (ISIN, security or fund name, quantity, average price, last price, profit/loss), and your Zerodha user ID, name, and email | Automatically importing your investment holdings |
+
+We **never** receive, see, or store your online banking or brokerage login credentials or one-time passwords. Authentication happens directly between you and the institution (through Plaid or Zerodha). See Section 4.
+
+### 3.3 Information collected automatically
 
 | Data type | Details | Purpose |
 |---|---|---|
 | **Authentication tokens** | JSON Web Tokens (JWT), access tokens, refresh tokens | Session management and authentication |
+| **Integration access tokens** | Encrypted access tokens issued by Plaid and Zerodha that let us refresh your connected data | Maintaining your active integrations (stored encrypted — see Section 7) |
 | **Session information** | Session identifiers, login timestamps | Security and session management |
 | **Basic request metadata** | IP address, user-agent string, request timestamps | Server operation, security monitoring, debugging |
 | **Server-side operational data** | Backend performance metrics, API response times, server error logs | Infrastructure monitoring and debugging via OpenTelemetry and Prometheus — server-side only |
 
 **Note:** The App does not integrate any client-side analytics SDK, crash-reporting SDK, or user behaviour tracking tool. We do not track which screens you visit, which buttons you tap, or how you navigate the App.
 
-### 3.3 Information we do not collect
+### 3.4 Information we do not collect
 
+- **Banking credentials** — we never receive or store the username, password, PIN, or one-time password for your bank or brokerage. Where you connect an institution, that authentication is handled directly by Plaid or Zerodha
 - **Location data** — we do not collect precise or approximate location
 - **Contacts** — we do not access your device address book
 - **Photos or media** — we do not access your camera or photo library
 - **Advertising identifiers** — we do not collect IDFA or any advertising identifier
-- **Bank credentials** — Recontrol does not currently connect to any bank or payment network; all data is entered manually
-- **Biometric data** — we do not collect fingerprint, face, or other biometric data
+- **Biometric data** — we do not collect or receive fingerprint, face, or other biometric data. The App offers an optional biometric app lock (e.g. Face ID / fingerprint); this verification is performed entirely by your device's operating system, and your biometric data never leaves your device or is shared with us
 
 ---
 
-## 4. How we use your information
+## 4. Connected accounts and financial integrations
+
+Recontrol offers **optional** integrations that let you link an external financial institution so your balances, transactions, and holdings import and refresh automatically. You are never required to use them, and manual entry remains fully available.
+
+<Note>
+These integrations are currently in **limited preview** and not yet generally available. This section describes how they work once enabled.
+</Note>
+
+### 4.1 Plaid (bank connections — United States and Canada)
+
+- We use **Plaid Inc.** ("Plaid") to connect to your bank. Plaid is a regulated financial-data aggregator.
+- When you connect a bank, you authenticate directly with Plaid (and, through Plaid, your bank). **Recontrol never sees or stores your bank login credentials.**
+- On your behalf, Plaid provides us the data listed in Section 3.2, including up to **730 days (two years)** of transaction history so your account history can be reconstructed.
+- Plaid is a **United States-based** service provider, and Plaid processes your banking data on infrastructure located in the United States before it reaches Recontrol. See Section 8 (International data transfers).
+- We store a Plaid access token so we can refresh your data periodically (approximately every six hours) and when you open the App. This token is **encrypted at rest using AES-256-GCM**.
+- Your use of Plaid is also governed by [Plaid's End User Privacy Policy](https://plaid.com/legal/#end-user-privacy-policy).
+
+### 4.2 Zerodha (investment holdings — India)
+
+- We use **Zerodha's Kite Connect API** to import your investment holdings if you connect your Zerodha (demat/trading) account.
+- You authenticate directly with Zerodha. **Recontrol never sees your Zerodha password or two-factor codes.**
+- On your behalf, Zerodha provides us the holdings data listed in Section 3.2.
+- We store a **daily** Zerodha access token, **encrypted at rest using AES-256-GCM**. It expires every day, after which you must re-authorise to continue syncing.
+- Your use of Zerodha is also governed by [Zerodha's privacy policy](https://zerodha.com/privacy/).
+
+### 4.3 Disconnecting an integration
+
+You can disconnect any integration at any time from within the App. When you disconnect:
+
+- We **revoke** the access token with the provider (Plaid or Zerodha), and
+- We **delete** the stored encrypted token from our systems.
+
+Accounts, transactions, and holdings already imported into your Space remain in your Space until you delete them or delete your account. Disconnecting stops all further syncing. We recommend disconnecting all integrations before deleting your account.
+
+---
+
+## 5. How we use your information
 
 - Creating and managing your user account
 - Authenticating your identity and managing sessions
-- Enabling you to create, view, edit, and delete financial accounts, transactions, and Spaces
+- Enabling you to create, view, edit, and delete financial accounts, transactions, goals, and Spaces
+- Importing and refreshing data from financial institutions you choose to connect
+- Converting and displaying balances in your chosen currency
+- Computing reports such as net worth, totals, and balance history
 - Enabling collaborative features, including memberships, roles, and permissions
 - Providing customer support
 - Identifying and fixing bugs and performance issues
@@ -82,30 +143,32 @@ Recontrol is a personal and collaborative finance management application that he
 
 ---
 
-## 5. How we share your information
+## 6. How we share your information
 
-### 5.1 Service providers
+### 6.1 Service providers and processors
 
-| Service provider | Data shared | Purpose |
-|---|---|---|
-| **Nhost** (Backend-as-a-Service) | Account data, authentication data, session tokens, email, display name, phone number, financial data | Authentication, user management, database hosting (PostgreSQL via Hasura), backend infrastructure |
-| **Amazon Web Services (AWS)** via Nhost | All data stored and transmitted through the Service | Cloud infrastructure, server hosting, data storage. Data is stored in **AWS ap-south-1 (Mumbai, India)**. |
+| Service provider | Data shared | Purpose | Location |
+|---|---|---|---|
+| **Nhost** (Backend-as-a-Service) | Account data, authentication data, session tokens, email, display name, phone number, financial data | Authentication, user management, database hosting (PostgreSQL via Hasura), backend infrastructure | India (AWS ap-south-1, Mumbai) |
+| **Amazon Web Services (AWS)** via Nhost | All data stored and transmitted through the Service | Cloud infrastructure, server hosting, data storage | **AWS ap-south-1 (Mumbai, India)** |
+| **Plaid Inc.** | The bank data described in Section 3.2 (only if you connect a bank) | Bank-account aggregation | **United States** |
+| **Zerodha** (Kite Connect) | The brokerage data described in Section 3.2 (only if you connect Zerodha) | Investment-holdings aggregation | India |
 
-All data is stored in India. It does not leave Indian infrastructure.
+Recontrol's own database and backend are hosted in India. The Plaid integration necessarily involves processing in the United States (see Section 8).
 
-### 5.2 Collaborative Space members
+### 6.2 Collaborative Space members
 
-When you participate in a shared Space, other members of that Space may see the financial data within that Space (accounts, transactions) in accordance with the permissions assigned to their role. Your display name and email may be visible to other Space members.
+When you participate in a shared Space, other members of that Space may see the financial data within that Space (accounts, transactions, goals, imported balances and holdings) in accordance with the permissions assigned to their role. Your display name and email may be visible to other Space members.
 
-### 5.3 Legal requirements
+### 6.3 Legal requirements
 
-We may disclose your information if required to do so by law, court order, or other legal process initiated by competent authorities in India.
+We may disclose your information if required to do so by law, court order, or other legal process initiated by competent authorities.
 
-### 5.4 Business transfers
+### 6.4 Business transfers
 
 In the event of a merger, acquisition, or sale of assets, your personal information may be transferred as part of that transaction. We will notify you of any change in ownership.
 
-### 5.5 What we do not do
+### 6.5 What we do not do
 
 - We do not sell your personal information to third parties
 - We do not share your data for advertising or marketing by third parties
@@ -114,12 +177,64 @@ In the event of a merger, acquisition, or sale of assets, your personal informat
 
 ---
 
-## 6. Data retention
+## 7. Data security
+
+We implement appropriate technical and organisational measures to protect your personal information, as described in detail in our [Information Security Policy](/legal/security):
+
+- **Encryption in transit:** All data is transmitted over TLS/HTTPS
+- **Encryption at rest:** Data stored in our databases is encrypted at rest using AES-256, provided by AWS
+- **Application-level token encryption:** Access tokens for connected integrations (Plaid, Zerodha) are additionally encrypted at rest using **AES-256-GCM** before being stored
+- **Secure credential storage:** On mobile devices, authentication tokens are stored using platform-native secure storage (iOS Keychain / Android Keystore via Expo Secure Store)
+- **Password hashing:** Passwords are stored only as one-way hashes; we cannot read them
+- **JWT authentication:** All API requests are authenticated using signed JSON Web Tokens
+- **Role-based access control:** Collaborative Spaces enforce granular permissions (see our [Access Controls Policy](/legal/access))
+- **Input validation:** All API requests are validated using Protocol Buffer schema validation (protovalidate)
+- **Access controls:** Internal access to user data is restricted to authorised personnel on a need-to-know basis
+
+No method of transmission over the Internet is 100% secure. If you become aware of any security issue, please contact us immediately at support@recontrol.money.
+
+### 7.1 Data breach notification
+
+In the event of a personal data breach, we will notify affected users and the relevant authorities in accordance with the laws that apply to them:
+
+- **India:** the Data Protection Board of India and affected users, under the DPDP Act and the Digital Personal Data Protection Rules, 2025, and applicable requirements under the Information Technology Act, 2000.
+- **United States:** affected residents (and, where required, state Attorneys General) under applicable state data-breach-notification laws.
+- **Canada:** the Office of the Privacy Commissioner of Canada and affected individuals where a breach creates a "real risk of significant harm" (PIPEDA), and the Commission d'accès à l'information for Quebec residents (Law 25); we maintain a record of breaches as required.
+
+See our [Information Security Policy](/legal/security) for our incident-response process.
+
+---
+
+## 8. Data storage location and international data transfers
+
+Recontrol's own database and backend infrastructure are hosted on Amazon Web Services in the **ap-south-1 (Mumbai, India)** region. The data you enter into Recontrol, and the data we import on your behalf, is **stored and processed in India**.
+
+### 8.1 If you are outside India (including the United States and Canada)
+
+If you access the Service from the United States, Canada, or elsewhere outside India, **your personal data is transferred to, stored in, and processed in India.** We want you to understand what this means:
+
+- **Comparable protection.** We protect your data with the technical and organisational safeguards described in Section 7 and our [Information Security Policy](/legal/security), and we remain accountable for that protection regardless of where the data is processed (consistent with the accountability principle under Canada's PIPEDA).
+- **Access by authorities.** While your data is in India, it is subject to Indian law and may be accessible to Indian courts, regulators, and law-enforcement or government authorities under lawful process. Likewise, where a sub-processor operates in another country, the data it handles may be subject to that country's laws.
+- **Your consent.** By creating an account and using the Service, you consent to the transfer, storage, and processing of your personal data in India as described here.
+
+For residents of **Quebec**, this constitutes a communication of personal information outside Quebec; before relying on it for production use we will conduct the privacy impact / transfer assessment required by Law 25. See Section 10 for region-specific rights.
+
+### 8.2 International processing through Plaid
+
+If you choose to connect a bank using Plaid (available for United States and Canadian institutions), your banking data is processed by **Plaid Inc. in the United States** before it is transmitted to, and stored by, Recontrol in India. By connecting a bank through Plaid, you consent to this processing, which is necessary to provide the bank-connection feature you have chosen to use. The DPDP Act permits transfer of personal data outside India except to territories restricted by the Central Government; the United States is not currently a restricted territory. Plaid's handling of your data is governed by [Plaid's End User Privacy Policy](https://plaid.com/legal/#end-user-privacy-policy).
+
+---
+
+## 9. Data retention
+
+We retain personal data only for as long as necessary for the purposes described in this policy, in line with our [Data Retention and Disposal Policy](/legal/data) and the storage-limitation principle of the DPDP Act.
 
 | Data type | Retention period |
 |---|---|
-| **Account and profile data** | Retained while your account is active. Deleted upon account deletion request — see Section 10. |
-| **Financial data** (accounts, transactions) | Retained while your account is active. Deleted upon account deletion request. |
+| **Account and profile data** | Retained while your account is active. Deleted upon account deletion — see Section 11. |
+| **Financial data** (accounts, transactions, goals) | Retained while your account is active. Deleted upon account deletion. |
+| **Imported data** (bank accounts/transactions, investment holdings) | Retained while your account is active or until you delete the data or disconnect the source. Deleted upon account deletion. |
+| **Integration access tokens** | Retained while the integration is connected. Revoked and deleted on disconnect or account deletion. Zerodha tokens additionally expire daily. |
 | **Authentication tokens** | Short-lived; expire automatically. Refresh tokens invalidated on logout or account deletion. |
 | **Session data** | Retained for the duration of the active session. Cleared on logout. |
 | **Server-side operational data** | Retained for up to 12 months for infrastructure monitoring, then deleted or anonymised. Not linked to individual user profiles. |
@@ -127,41 +242,17 @@ In the event of a merger, acquisition, or sale of assets, your personal informat
 
 ---
 
-## 7. Data security
+## 10. Your rights
 
-We implement appropriate technical and organisational measures to protect your personal information:
+Under the Digital Personal Data Protection Act, 2023 and applicable Indian law, you have the following rights:
 
-- **Encryption in transit:** All data is transmitted over TLS/HTTPS
-- **Encryption at rest:** Data stored in our databases is encrypted at rest using AES-256, provided by AWS
-- **Secure credential storage:** On mobile devices, authentication tokens are stored using platform-native secure storage (iOS Keychain / Android Keystore via Expo Secure Store)
-- **JWT authentication:** All API requests are authenticated using signed JSON Web Tokens
-- **Role-based access control:** Collaborative Spaces enforce granular permissions
-- **Input validation:** All API requests are validated using Protocol Buffer schema validation (protovalidate)
-- **Access controls:** Internal access to user data is restricted to authorised personnel on a need-to-know basis
-
-No method of transmission over the Internet is 100% secure. If you become aware of any security breach, please contact us immediately at support@recontrol.money.
-
-### 7.1 Data breach notification
-
-In the event of a personal data breach that poses a risk to users, we will notify affected users without undue delay and comply with applicable notification requirements under the Information Technology Act, 2000 and the Digital Personal Data Protection Act, 2023.
-
----
-
-## 8. Data storage location
-
-All of your personal data is stored on Amazon Web Services infrastructure in the **ap-south-1 (Mumbai, India)** region. Your data does not leave India.
-
----
-
-## 9. Your rights
-
-Under the Digital Personal Data Protection Act, 2023 (DPDP Act) and applicable Indian law, you have the following rights:
-
-- **Access:** Request a copy of the personal data we hold about you
-- **Correction:** Request correction of inaccurate or incomplete personal data
-- **Deletion:** Request deletion of your personal data (see Section 10)
-- **Data export:** Request a copy of your data in a portable format
-- **Withdraw consent:** Where processing is based on consent, withdraw your consent at any time
+- **Access:** Request a summary of the personal data we hold about you and how we process it
+- **Correction:** Request correction of inaccurate or incomplete personal data, and completion or updating of your data
+- **Erasure:** Request deletion of your personal data (see Section 11)
+- **Data portability / export:** Request a copy of your data in a portable format
+- **Withdraw consent:** Where processing is based on consent, withdraw your consent at any time (including by disconnecting an integration)
+- **Grievance redressal:** Raise a complaint with our Grievance Officer (Section 17), which we will address within the timeframe required by law
+- **Nominate:** Nominate another individual to exercise your rights in the event of your death or incapacity
 
 To exercise any of these rights, you may:
 
@@ -171,11 +262,46 @@ To exercise any of these rights, you may:
 
 We will respond to your request within thirty (30) days.
 
+The rights above are available to all users. The following sections add rights specific to your region. **Across every region, we do not sell your personal information, we do not "share" it for cross-context behavioural advertising, and we do not use it for third-party advertising.**
+
+### 10.1 United States (California and other states)
+
+These rights apply to residents of US states with comprehensive privacy laws (including California's CCPA/CPRA, and the laws of Colorado, Connecticut, Virginia, Texas, Oregon and other states). We extend the core rights below to all US users regardless of whether we currently meet a given law's applicability thresholds.
+
+**Categories of personal information we collect** map to these statutory categories: *identifiers* (email, display name, phone number); *financial information* (account balances, transactions, goals; and, if you connect a bank, imported account and transaction data); *internet/network activity* (limited request metadata such as IP address); and *sensitive personal information* (financial-account information and account log-in credentials). Sources, purposes, and recipients are described in Sections 3–6.
+
+**Your rights:**
+
+- **Know / access** the categories and specific pieces of personal information we have collected, the sources, the purposes, and the categories of recipients.
+- **Delete** the personal information we hold about you (see Section 11).
+- **Correct** inaccurate personal information.
+- **Portability** — receive a copy in a portable format.
+- **Opt out of "sale" or "sharing"** of personal information and of targeted advertising — **we do not do any of these**, so there is nothing to opt out of, but we honour browser opt-out preference signals such as the **Global Privacy Control (GPC)**.
+- **Limit the use of sensitive personal information** — we use sensitive personal information only to provide the Service and for purposes that do not trigger the right to limit.
+- **Non-discrimination** — we will not deny service, charge different prices, or provide a different quality of service because you exercised a right.
+
+**California "Shine the Light"** (Civil Code § 1798.83): we do not disclose personal information to third parties for their own direct-marketing purposes.
+
+To exercise these rights, email support@recontrol.money. You may use an **authorised agent**; we may need to verify your identity (and the agent's authority) before acting. We do not knowingly sell or share the personal information of consumers under 16.
+
+### 10.2 Canada (PIPEDA and Quebec Law 25)
+
+For users in Canada, we comply with the federal Personal Information Protection and Electronic Documents Act (**PIPEDA**) and, for Quebec residents, the Act respecting the protection of personal information in the private sector (**Law 25**).
+
+- **Accountability.** Our designated **Privacy Officer** (Section 17) is accountable for our handling of your personal information and for responding to your requests and complaints.
+- **Consent.** We collect, use, and disclose personal information with your knowledge and consent. Because financial information is sensitive, we rely on your **express consent** for it; you may **withdraw consent** at any time (including by disconnecting an integration or deleting your account), subject to legal or contractual limits.
+- **Limited collection, use, and retention.** We collect only what we need for the purposes in Section 5 and retain it only as described in our [Data Retention and Disposal Policy](/legal/data).
+- **Cross-border storage.** Your personal information is stored and processed **in India** and may be accessible to authorities there under lawful process (see Section 8). We remain accountable for its protection.
+- **Your rights:** access your personal information, request correction, withdraw consent, and — for Quebec residents — **data portability** and **de-indexing** of certain information.
+- **No solely automated decisions.** We do not use your personal information to make decisions based exclusively on automated processing that produce legal or similarly significant effects about you.
+- **Complaints.** You may complain to our Privacy Officer. If unsatisfied, you may contact the **Office of the Privacy Commissioner of Canada**, or, in Quebec, the **Commission d'accès à l'information**.
+- **Electronic messages (CASL).** We send transactional and service messages necessary to operate the Service. We will send commercial electronic messages only with your consent and will always include a way to unsubscribe.
+
 ---
 
-## 10. Account deletion and data erasure
+## 11. Account deletion and data erasure
 
-### 10.1 How to delete your account
+### 11.1 How to delete your account
 
 You have the right to delete your account and all associated personal data at any time:
 
@@ -183,7 +309,7 @@ You have the right to delete your account and all associated personal data at an
 - **Web form:** Visit [https://recontrol.money/data/delete](https://recontrol.money/data/delete)
 - **Email:** Send a deletion request to support@recontrol.money
 
-### 10.2 What gets deleted
+### 11.2 What gets deleted
 
 <Warning>
 **Deletion is permanent and irreversible. We do not maintain backups of user data. Once your deletion request is processed, your data cannot be recovered by you or by us under any circumstances.**
@@ -192,53 +318,60 @@ You have the right to delete your account and all associated personal data at an
 Upon processing your deletion request, we permanently delete:
 
 - Your user account and profile information (email, display name, phone number)
-- All financial accounts you created
-- All transactions you recorded
+- All financial accounts, transactions, and goals you created
+- All data imported from connected institutions (bank accounts, transactions, investment holdings)
+- All stored integration access tokens (which are also revoked with the provider)
 - Your currency preferences and other settings
 - Your Space memberships and role assignments
 - Session tokens and authentication data
 
-### 10.3 Processing timeframe
+Deletion of your user account cascades across our database, removing the Spaces you own and all records within them. See our [Data Retention and Disposal Policy](/legal/data) for the technical detail.
+
+### 11.3 Processing timeframe
 
 In-app deletions are processed immediately. Email requests are processed within **thirty (30) days** of receipt.
 
-### 10.4 Data that may be retained
+### 11.4 Data that may be retained
 
-After account deletion, we may retain minimal data only where required by applicable Indian law (for example, fraud or abuse records required by law enforcement). We will not retain any data beyond what is legally mandated.
+After account deletion, we may retain minimal data only where required by applicable Indian law (for example, records required by a court order or law enforcement process). We will not retain any data beyond what is legally mandated.
 
-### 10.5 Written confirmation
+### 11.5 Written confirmation
 
 You may request written confirmation that your data has been deleted by emailing support@recontrol.money.
 
-### 10.6 Effect on shared Spaces
+### 11.6 Effect on shared Spaces
 
 - Your membership will be removed from all Spaces
 - If you are the sole administrator of a Space, you must transfer ownership or delete the Space before account deletion can complete
 
 ---
 
-## 11. Children's privacy
+## 12. Children's privacy
 
 The Service is not intended for users under the age of eighteen (18). We do not knowingly collect personal information from children under 18. If we become aware that we have collected personal information from a child under 18, we will take steps to delete that information promptly.
+
+Because the Service is restricted to adults, we do not knowingly collect personal information from children under 13 (in compliance with the US **Children's Online Privacy Protection Act (COPPA)**) or from minors protected under US state laws or Canadian law. We do not sell or share the personal information of minors.
 
 If you are a parent or guardian and believe your child has provided us with personal information, please contact us at support@recontrol.money.
 
 ---
 
-## 12. Third-party services
+## 13. Third-party services
 
 | Service | Provider | Data processed | Purpose | Privacy policy |
 |---|---|---|---|---|
-| **Nhost** | Nhost | Email, password (hashed), display name, phone number, session data, auth tokens | Authentication, user management, database hosting | [nhost.io/privacy](https://nhost.io/privacy) |
+| **Nhost** | Nhost | Email, password (hashed), display name, phone number, session data, auth tokens, financial data | Authentication, user management, database hosting | [nhost.io/legal/privacy-policy](https://nhost.io/legal/privacy-policy) |
 | **Amazon Web Services (AWS)** | Amazon (via Nhost) | All data stored and transmitted through the Service (encrypted at rest and in transit) | Cloud infrastructure, server hosting, data storage in Mumbai, India | [aws.amazon.com/privacy](https://aws.amazon.com/privacy/) |
+| **Plaid Inc.** | Plaid | Bank account and transaction data (only if you connect a bank) | Bank-account aggregation (US/Canada) | [plaid.com/legal](https://plaid.com/legal/) |
+| **Zerodha** (Kite Connect) | Zerodha Broking Ltd. | Investment-holdings data (only if you connect Zerodha) | Investment-holdings aggregation (India) | [zerodha.com/privacy](https://zerodha.com/privacy/) |
 
 We do not integrate third-party advertising SDKs, analytics SDKs that track users across apps, or social media tracking pixels.
 
 ---
 
-## 13. Cookies and local storage
+## 14. Cookies and local storage
 
-### 13.1 Mobile application
+### 14.1 Mobile application
 
 The Recontrol mobile application does not use cookies. It uses:
 
@@ -247,31 +380,17 @@ The Recontrol mobile application does not use cookies. It uses:
 
 These are strictly necessary for the operation of the Service and are not used for tracking, analytics, or advertising.
 
-### 13.2 Web application
+### 14.2 Web application
 
-The Recontrol web application uses:
-
-- **Session storage** and **local storage** to manage your authentication session
-
-We do not use third-party tracking cookies, advertising cookies, or analytics cookies.
+The Recontrol web application uses **session storage** and **local storage** to manage your authentication session. We do not use third-party tracking cookies, advertising cookies, or analytics cookies.
 
 ---
 
-## 14. Governing law
+## 15. Governing law
 
-This Privacy Policy is governed by and construed in accordance with the laws of India, including the **Digital Personal Data Protection Act, 2023 (DPDP Act)** and the **Information Technology Act, 2000 (IT Act)**. Any disputes arising under this Privacy Policy shall be subject to the jurisdiction of the courts of Ghaziabad, Uttar Pradesh, India.
+This Privacy Policy is governed by and construed in accordance with the laws of India, including the **Digital Personal Data Protection Act, 2023**, the Digital Personal Data Protection Rules, 2025, and the **Information Technology Act, 2000** (including the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011). Any disputes arising under this Privacy Policy shall be subject to the jurisdiction of the courts of Ghaziabad, Uttar Pradesh, India.
 
----
-
-## 15. Contact us
-
-If you have questions, concerns, or requests regarding this Privacy Policy:
-
-- **Email:** support@recontrol.money
-- **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016
-- **Data deletion requests:** [https://recontrol.money/data/delete](https://recontrol.money/data/delete)
-
-We will respond to all privacy-related inquiries within **thirty (30) days**.
+If you reside outside India, nothing in this section deprives you of the protection of the **mandatory data-protection and consumer-protection laws of your country, state, or province of residence** (such as the CCPA/CPRA and other US state laws, PIPEDA, and Quebec's Law 25). You may also have the right to lodge a complaint with your local data-protection authority.
 
 ---
 
@@ -284,6 +403,19 @@ We may update this Privacy Policy periodically. When we make material changes, w
 - Send an email notification for significant changes
 
 Your continued use of the Service after the effective date of any updated Privacy Policy constitutes your acceptance of the changes.
+
+---
+
+## 17. Contact us and Grievance Officer
+
+If you have questions, concerns, or requests regarding this Privacy Policy, or wish to exercise your rights or raise a grievance:
+
+- **Grievance Officer:** Mrinal Wahal
+- **Email:** support@recontrol.money
+- **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016
+- **Data deletion requests:** [https://recontrol.money/data/delete](https://recontrol.money/data/delete)
+
+We will acknowledge and respond to all privacy-related inquiries and grievances within the timeframes required by the DPDP Act and its Rules, and in any event within **thirty (30) days**.
 
 ---
 

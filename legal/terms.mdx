@@ -3,8 +3,9 @@ title: "Terms of Service"
 description: "The terms that govern your use of Recontrol."
 ---
 
-**Effective Date:** 22 March 2026
-**Last Updated:** 22 March 2026
+**Effective Date:** 18 June 2026
+**Last Updated:** 18 June 2026
+**Supersedes:** version dated 22 March 2026
 
 ---
 
@@ -36,11 +37,14 @@ By using the Service, you represent and warrant that:
 Recontrol is a personal and collaborative finance management application that enables users to:
 
 - **Track financial accounts:** Create and manage asset, liability, income, and expense accounts
-- **Record transactions:** Log financial transactions between accounts with amounts, descriptions, and timestamps
+- **Record transactions:** Log double-entry financial transactions between accounts with amounts, descriptions, and timestamps
+- **Set goals:** Define financial goals and link accounts to track progress
+- **View reports:** Compute net worth, totals, and balance history, with multi-currency conversion
 - **Collaborate in Spaces:** Create shared workspaces with role-based access control
 - **Manage access:** Define roles with granular permissions within collaborative Spaces
+- **Connect institutions (optional):** Link external financial institutions to import balances, transactions, and holdings automatically (see Section 5A)
 
-The Service is available on iOS and Android. Feature availability may vary by platform.
+The Service is available on iOS and Android. Feature availability may vary by platform and by region.
 
 **The Service is provided for personal financial management purposes only. Recontrol does not provide financial advice, investment advice, tax advice, or any other professional financial services. See Section 14 for further details.**
 
@@ -89,6 +93,39 @@ Space administrators may invite other users by email or phone number. Members ca
 ### 5.4 Responsibility for shared Spaces
 
 You are responsible for managing access to any Space you create, including the roles and permissions you assign. We are not responsible for any actions taken by members within your Space.
+
+---
+
+## 5A. Connected accounts and financial integrations
+
+### 5A.1 Optional integrations
+
+The Service offers optional integrations that let you connect external financial institutions so that your balances, transactions, and investment holdings import and refresh automatically. As of the date of these Terms, these are:
+
+- **Plaid** — bank-account connections for institutions in the United States and Canada, and
+- **Zerodha** (Kite Connect) — investment-holdings connections for accounts in India.
+
+<Note>
+These integrations are currently in **limited preview** and may not yet be available to you. This Section describes the terms that apply once they are released and you choose to use them.
+</Note>
+
+These integrations are entirely optional. You are never required to connect an account, and manual entry remains available for all features. Where you connect a bank through Plaid, you acknowledge that Plaid acts as a data intermediary and that [Plaid's End User Privacy Policy](https://plaid.com/legal/#end-user-privacy-policy) applies to Plaid's handling of your data.
+
+### 5A.2 Your authorisation
+
+By connecting an institution, you authorise Recontrol to access, retrieve, and store the financial data made available by that institution through the relevant aggregator (Plaid or Zerodha), on your behalf, for the purpose of providing the Service. You represent that you are the account holder or are otherwise authorised to connect the account.
+
+### 5A.3 Third-party terms
+
+Your use of an integration is also governed by the terms and privacy policy of the relevant provider (Plaid or Zerodha) and of your financial institution. **Recontrol does not see or store your banking or brokerage login credentials**; authentication occurs directly between you and the provider.
+
+### 5A.4 No responsibility for third-party data
+
+We are not responsible for the accuracy, completeness, timeliness, or availability of data provided by third-party institutions or aggregators, nor for any act or omission of those third parties. Imported data is provided "as is."
+
+### 5A.5 Disconnection
+
+You may disconnect any integration at any time from within the App. On disconnection, we revoke the access token with the provider and delete the stored token. Data already imported into your Space remains until you delete it or delete your account.
 
 ---
 
@@ -155,7 +192,7 @@ Portions of the Service's source code are made available under the BSD 3-Clause 
 
 ## 9. Third-party services
 
-The Service uses third-party services for authentication, cloud infrastructure, and database hosting (Nhost and Amazon Web Services). Your use of the Service is also subject to the terms and privacy policies of these third-party providers.
+The Service uses third-party services for authentication, cloud infrastructure, and database hosting (Nhost and Amazon Web Services), and — where you choose to connect an external financial account — for financial-data aggregation (Plaid and Zerodha). Your use of the Service is also subject to the terms and privacy policies of these third-party providers. See our [Privacy Policy](/legal/privacy) for the data each provider processes.
 
 ### 9.1 App Store and platform terms
 
@@ -192,7 +229,9 @@ You may delete your account at any time:
 Upon account deletion, the following is permanently and irreversibly deleted:
 
 - Your account and profile information
-- All financial accounts, transactions, and settings
+- All financial accounts, transactions, goals, and settings
+- All data imported from connected institutions (bank accounts, transactions, investment holdings)
+- All stored integration access tokens (which are also revoked with the provider)
 - All Space memberships and role assignments
 - Session tokens and authentication data
 
@@ -222,6 +261,8 @@ THE SERVICE IS PROVIDED ON AN "AS-IS" AND "AS-AVAILABLE" BASIS, WITHOUT WARRANTI
 
 We do not warrant that the Service will be available at all times, uninterrupted, error-free, or free from viruses or harmful components. We do not warrant the accuracy, completeness, or reliability of any financial data, calculations, or information generated by the Service.
 
+Some jurisdictions do not allow the exclusion of certain warranties or implied terms; to that extent, the exclusions above may not apply to you, and you may have additional rights under the law of your place of residence.
+
 ---
 
 ## 13. Limitation of liability
@@ -230,6 +271,8 @@ TO THE FULLEST EXTENT PERMITTED BY APPLICABLE INDIAN LAW, IN NO EVENT SHALL RECO
 
 OUR TOTAL AGGREGATE LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR RELATING TO THE SERVICE SHALL NOT EXCEED THE GREATER OF: (A) THE AMOUNT YOU HAVE PAID US IN THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM, OR (B) ONE THOUSAND INDIAN RUPEES (₹1,000).
 
+Some jurisdictions do not allow the exclusion or limitation of certain damages; to that extent, the limitations above may not apply to you. Nothing in these Terms excludes or limits liability that cannot be excluded or limited under applicable law.
+
 ---
 
 ## 14. Financial disclaimers
@@ -237,6 +280,8 @@ OUR TOTAL AGGREGATE LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR RELATING T
 THE SERVICE IS A PERSONAL FINANCIAL MANAGEMENT TOOL ONLY. NOTHING IN THE SERVICE CONSTITUTES FINANCIAL ADVICE, INVESTMENT ADVICE, TAX ADVICE, ACCOUNTING ADVICE, OR ANY OTHER PROFESSIONAL ADVICE. THE SERVICE IS NOT A SUBSTITUTE FOR PROFESSIONAL FINANCIAL COUNSEL.
 
 Recontrol is not a financial institution, bank, credit union, brokerage, investment adviser, tax adviser, or financial planner. You are solely responsible for all financial decisions you make based on data in the Service.
+
+Recontrol is **not a "consumer reporting agency" and does not provide "consumer reports"** within the meaning of the US Fair Credit Reporting Act (FCRA) or any similar law. The Service must not be used to make decisions about a person's eligibility for credit, insurance, employment, housing, or any other benefit. Recontrol is **not a money transmitter, payment processor, or money-services business**; it does not hold, move, or transfer funds. These disclaimers apply in every jurisdiction in which the Service is offered, including the United States and Canada.
 
 ---
 
@@ -267,6 +312,8 @@ For matters not referred to arbitration, each party irrevocably submits to the e
 These Terms shall be governed by and construed in accordance with the laws of India, including the **Indian Contract Act, 1872**, the **Information Technology Act, 2000**, and the **Digital Personal Data Protection Act, 2023**, without regard to conflict of laws provisions.
 
 Any legal action or proceeding arising out of or relating to these Terms shall be brought exclusively in the courts located in Ghaziabad, Uttar Pradesh, India, and you consent to the personal jurisdiction and venue of such courts.
+
+**Consumers outside India.** If you are a consumer residing outside India, you may be entitled to the protection of mandatory provisions of the law of your country, state, or province of residence. Nothing in Sections 13, 16, or 17 deprives you of any non-waivable statutory right or remedy, of the right to bring proceedings (including in a small-claims court) in your place of residence where the law so allows, or of the right to lodge a complaint with a competent regulator or data-protection authority.
 
 ---
 

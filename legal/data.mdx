@@ -1,0 +1,153 @@
+---
+title: "Data Retention and Disposal Policy"
+description: "How long Recontrol keeps personal data, and how it is securely and permanently disposed of."
+---
+
+**Effective Date:** 18 June 2026
+**Last Updated:** 18 June 2026
+**Version:** 1.0
+**Review cycle:** Annually, or upon any significant change to systems or law
+
+---
+
+## 1. Purpose
+
+This Data Retention and Disposal Policy sets out how Recontrol retains, archives, and disposes of personal data and other information. Its purpose is to ensure that we:
+
+- Keep personal data only for as long as necessary for the purposes for which it was collected (the **storage-limitation** principle),
+- Dispose of data securely and irreversibly when it is no longer required, and
+- Meet our obligations under the **Digital Personal Data Protection Act, 2023** (the "DPDP Act") and the **Digital Personal Data Protection Rules, 2025**, the **Information Technology Act, 2000** and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 (the "SPDI Rules"), and recognised practice including **ISO/IEC 27001:2022** and **NIST SP 800-88** (media sanitization).
+
+This policy supports our [Privacy Policy](/legal/privacy) and works alongside our [Information Security Policy](/legal/security) and [Access Controls Policy](/legal/access).
+
+---
+
+## 2. Scope
+
+This policy applies to all personal data and operational data Recontrol processes, in all systems we control, including:
+
+- The application database (PostgreSQL, hosted via Nhost on AWS ap-south-1, Mumbai),
+- Authentication and session data,
+- Encrypted access tokens for third-party integrations (Plaid, Zerodha),
+- Server-side logs and operational telemetry, and
+- Support communications.
+
+It covers all environments (production and non-production) and all personnel with access to those systems.
+
+---
+
+## 3. Guiding principles
+
+1. **Storage limitation.** We retain personal data only for as long as it is needed for a clear purpose, or as required by law.
+2. **Data minimisation.** We do not collect or retain data we do not need. The App contains no third-party analytics or behavioural tracking.
+3. **Purpose limitation.** Data is retained only for the purposes described in the [Privacy Policy](/legal/privacy).
+4. **Secure disposal.** When data is no longer required, it is disposed of so that it cannot be reconstructed.
+5. **No unnecessary backups.** We do not maintain secondary or offsite backup copies of user data. There is therefore no backup from which deleted data could be restored.
+6. **User control.** Users can delete their account and data, and disconnect integrations, at any time.
+
+---
+
+## 4. Retention schedule
+
+| Data category | Examples | Retention period | Basis |
+|---|---|---|---|
+| **Account & profile** | Email, display name, phone number, password hash | While the account is active; deleted on account deletion | Necessary to provide the Service |
+| **Financial data** | Accounts, transactions, goals, balances | While the account is active; deleted on account deletion | Core functionality |
+| **Imported data** | Bank accounts/transactions (Plaid), investment holdings (Zerodha) | Until the user deletes it, disconnects the source, or deletes the account | Consent / feature provision |
+| **Integration access tokens** | Encrypted Plaid / Zerodha tokens | Until disconnect or account deletion; Zerodha tokens also expire daily | Necessary to maintain the integration |
+| **Authentication tokens** | JWT access tokens, refresh tokens | Short-lived; expire automatically; refresh tokens invalidated on logout / deletion | Session security |
+| **Session data** | Session IDs, login timestamps | Duration of the session; cleared on logout | Session security |
+| **Server-side operational data** | Performance metrics, API timings, error logs (OpenTelemetry / Prometheus) | Up to **12 months**, then deleted or anonymised; not linked to user profiles | Infrastructure monitoring, security, debugging |
+| **Support communications** | Emails to support | Up to **24 months** after last contact | Customer support, dispute handling |
+| **Legal-hold data** | Records subject to a legal obligation or proceeding | Only for as long as legally required, then disposed of | Legal obligation (see Section 7) |
+
+We periodically review whether retained data is still necessary and dispose of data that is not.
+
+> **Voluntary benchmark.** Although Recontrol does not meet the user thresholds that make the DPDP Rules, 2025 fixed three-year erasure rule mandatory for it, we apply the spirit of that rule: where an account becomes dormant and the retention purpose has lapsed, we may notify the user and erase associated personal data.
+
+---
+
+## 5. Disposal methods
+
+We use the disposal method appropriate to the medium and the sensitivity of the data, following the **Clear / Purge / Destroy** framework of NIST SP 800-88.
+
+### 5.1 Logical deletion (database)
+
+User-initiated and account deletions remove records from the production PostgreSQL database. Deletion of a user record **cascades** through related records via `ON DELETE CASCADE` foreign-key constraints — removing the user's Spaces and, within them, accounts, transactions, goals, roles, memberships, holdings, and integration connection rows. Because we keep **no backups**, a deleted record has no secondary copy to restore from.
+
+### 5.2 Cryptographic erasure (crypto-shredding) of integration tokens
+
+Access tokens for connected banks and brokers are stored **encrypted with AES-256-GCM**. When a user disconnects an integration or deletes their account, we:
+
+1. **Revoke** the token with the provider (Plaid `item/remove`, Zerodha session revocation), and
+2. **Delete** the encrypted token record from our database.
+
+Because the stored value is only meaningful when decrypted with a key we control, deleting the ciphertext (and the absence of any backup) renders it cryptographically unrecoverable.
+
+### 5.3 Physical media sanitization (cloud)
+
+Recontrol operates entirely on managed cloud infrastructure (AWS, via Nhost). We do not own or physically control storage media. Sanitization and decommissioning of physical media is performed by AWS under its own media-disposal programme, which is independently certified (including to ISO/IEC 27001 and aligned with NIST SP 800-88). We rely on these provider controls for physical destruction.
+
+### 5.4 Logs and telemetry
+
+Operational logs and telemetry are configured to age out automatically within the retention window in Section 4. Logs are written so as not to contain sensitive personal data (see the [Information Security Policy](/legal/security)).
+
+### 5.5 Local data on user devices
+
+Authentication tokens and session state stored on a user's device (iOS Keychain / Android Keystore via Expo Secure Store, and AsyncStorage) are cleared on logout or app uninstall. This data never includes plaintext integration tokens.
+
+---
+
+## 6. Account deletion
+
+Users may delete their account and all associated personal data at any time:
+
+- **In-app** (Settings → Delete Account) — processed **immediately**, and
+- **By email** to support@recontrol.money — processed within **30 days**.
+
+On deletion, the cascade in Section 5.1 and the crypto-shredding in Section 5.2 apply. Deletion is **permanent and irreversible**. See [Delete your data](/data/delete) for the user-facing process.
+
+---
+
+## 7. Legal holds and exceptions
+
+We may retain specific data beyond the periods above **only** where required to:
+
+- Comply with a legal obligation, court order, or lawful request from a competent authority, or
+- Establish, exercise, or defend a legal claim.
+
+Where a legal hold applies, the affected data is retained only for as long as the obligation persists and is then disposed of under Section 5. We do not retain data for business purposes after an account is deleted.
+
+---
+
+## 8. Verification and records
+
+- **Verification.** Disposal is verified by confirming the absence of the record (logical deletion) and successful provider-side revocation (integrations). Because no backups exist, no separate backup-purge verification is needed.
+- **Records of disposal.** Where we action a manual (email) deletion or a legal-hold disposal, we keep a minimal, non-personal record that the disposal occurred and when, for accountability — without retaining the disposed data itself.
+- **User confirmation.** Users may request written confirmation that their data has been deleted.
+
+---
+
+## 9. Roles and responsibilities
+
+| Role | Responsibility |
+|---|---|
+| **Data Fiduciary** (Mrinal Wahal, sole proprietor) | Owns this policy; approves retention periods; authorises legal holds and exceptions |
+| **Grievance Officer** (support@recontrol.money) | Receives and actions data-deletion and rights requests |
+| **Any person with system access** | Must follow this policy and must not retain or copy personal data outside approved systems |
+
+---
+
+## 10. Review
+
+This policy is reviewed at least **annually**, and whenever there is a significant change to our systems, data flows, or applicable law (including changes to the DPDP Act or its Rules). Material changes are reflected in the "Last Updated" date and version above.
+
+---
+
+## 11. Contact
+
+Questions about this policy, or requests to delete data, may be directed to:
+
+- **Grievance Officer:** Mrinal Wahal
+- **Email:** support@recontrol.money
+- **Mailing Address:** 2005, Yucca, Paramount Symphony, Crossing Republik, Ghaziabad, Uttar Pradesh, India 201016
