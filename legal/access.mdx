@@ -45,17 +45,16 @@ This policy applies to:
 
 ### 4.1 User authentication methods
 
-Recontrol authenticates users through the Nhost authentication service. Supported methods include:
+Recontrol authenticates users through the Nhost authentication service. The supported methods are:
 
 - **Email and password**
-- **Passwordless email** one-time password / magic link
-- **SMS one-time password** (where a phone number is provided)
-- **Sign in with Apple**
+- **Sign in with Google** (OAuth)
+- **Sign in with Apple** (OAuth, where available)
 
 ### 4.2 Credential security
 
 - Passwords are stored only as **one-way hashes**; Recontrol never stores or sees plaintext passwords.
-- One-time passwords are short-lived and single-use.
+- For **Google** and **Apple** sign-in, authentication is delegated to the provider via OAuth; Recontrol never receives your Google or Apple password.
 - Users are responsible for keeping their credentials confidential and for using a strong, unique password.
 
 ### 4.3 Tokens and sessions
