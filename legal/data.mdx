@@ -3,9 +3,9 @@ title: "Data Retention and Disposal Policy"
 description: "How long Recontrol keeps personal data, and how it is securely and permanently disposed of."
 ---
 
-**Effective Date:** 18 June 2026
-**Last Updated:** 18 June 2026
-**Version:** 1.0
+**Effective Date:** 30 June 2026
+**Last Updated:** 30 June 2026
+**Version:** 1.1
 **Review cycle:** Annually, or upon any significant change to systems or law
 
 ---
@@ -27,8 +27,10 @@ This policy supports our [Privacy Policy](/legal/privacy) and works alongside ou
 This policy applies to all personal data and operational data Recontrol processes, in all systems we control, including:
 
 - The application database (PostgreSQL, hosted via Nhost on AWS ap-south-1, Mumbai),
+- The application/API server (hosted on Railway in the United States), which processes data in transit but stores none,
 - Authentication and session data,
 - Encrypted access tokens for third-party integrations (Plaid, Zerodha),
+- Device push tokens,
 - Server-side logs and operational telemetry, and
 - Support communications.
 
@@ -39,7 +41,7 @@ It covers all environments (production and non-production) and all personnel wit
 ## 3. Guiding principles
 
 1. **Storage limitation.** We retain personal data only for as long as it is needed for a clear purpose, or as required by law.
-2. **Data minimisation.** We do not collect or retain data we do not need. The App contains no third-party analytics or behavioural tracking.
+2. **Data minimisation.** We do not collect or retain data we do not need. The App's only analytics tool (PostHog) collects pseudonymous usage events that exclude all financial data, and it can be turned off in Settings. We use no advertising or cross-app tracking.
 3. **Purpose limitation.** Data is retained only for the purposes described in the [Privacy Policy](/legal/privacy).
 4. **Secure disposal.** When data is no longer required, it is disposed of so that it cannot be reconstructed.
 5. **No unnecessary backups.** We do not maintain secondary or offsite backup copies of user data. There is therefore no backup from which deleted data could be restored.
@@ -57,7 +59,10 @@ It covers all environments (production and non-production) and all personnel wit
 | **Integration access tokens** | Encrypted Plaid / Zerodha tokens | Until disconnect or account deletion; Zerodha tokens also expire daily | Necessary to maintain the integration |
 | **Authentication tokens** | JWT access tokens, refresh tokens | Short-lived; expire automatically; refresh tokens invalidated on logout / deletion | Session security |
 | **Session data** | Session IDs, login timestamps | Duration of the session; cleared on logout | Session security |
-| **Server-side operational data** | Performance metrics, API timings, error logs (OpenTelemetry / Prometheus) | Up to **12 months**, then deleted or anonymised; not linked to user profiles | Infrastructure monitoring, security, debugging |
+| **Device push tokens** | Expo push token, device name, platform | Until you disable notifications, sign out, or delete your account | Delivering notifications you enable |
+| **Country / region** | Two-letter country code from your device at sign-up | While the account is active; deleted on account deletion | Regional privacy rights and defaults |
+| **Product-analytics events** | Pseudonymous usage events (PostHog); no financial data | Held by PostHog under our analytics retention settings; collection stops on opt-out | Product improvement |
+| **Server-side operational data** | Performance metrics, API timings, error logs (OpenTelemetry) | Up to **12 months**, then deleted or anonymised; not linked to user profiles | Infrastructure monitoring, security, debugging |
 | **Support communications** | Emails to support | Up to **24 months** after last contact | Customer support, dispute handling |
 | **Legal-hold data** | Records subject to a legal obligation or proceeding | Only for as long as legally required, then disposed of | Legal obligation (see Section 7) |
 
@@ -73,7 +78,7 @@ We use the disposal method appropriate to the medium and the sensitivity of the 
 
 ### 5.1 Logical deletion (database)
 
-User-initiated and account deletions remove records from the production PostgreSQL database. Deletion of a user record **cascades** through related records via `ON DELETE CASCADE` foreign-key constraints — removing the user's Spaces and, within them, accounts, transactions, goals, roles, memberships, holdings, and integration connection rows. Because we keep **no backups**, a deleted record has no secondary copy to restore from.
+User-initiated and account deletions remove records from the production PostgreSQL database. Deletion of a user record **cascades** through related records via `ON DELETE CASCADE` foreign-key constraints — removing the user's Spaces and, within them, accounts, transactions, goals, roles, memberships, holdings, and integration connection rows, along with the user's memberships in other Spaces, device push tokens, and refresh tokens (ending all sessions). Because we keep **no backups**, a deleted record has no secondary copy to restore from. (Pending invitations are addressed to an email address or phone number rather than to a user account, so they are not part of a deleted user's record.)
 
 ### 5.2 Cryptographic erasure (crypto-shredding) of integration tokens
 

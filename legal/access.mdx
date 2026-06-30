@@ -3,9 +3,9 @@ title: "Access Controls Policy"
 description: "How access to Recontrol's systems and your data is granted, authenticated, authorised, and reviewed."
 ---
 
-**Effective Date:** 18 June 2026
-**Last Updated:** 18 June 2026
-**Version:** 1.0
+**Effective Date:** 30 June 2026
+**Last Updated:** 30 June 2026
+**Version:** 1.1
 **Review cycle:** Annually, or upon any significant change to systems or law
 
 ---
@@ -107,7 +107,7 @@ A **Space** is an isolated workspace. Data in a Space is visible only to that Sp
 
 ### 7.1 Internal service authentication
 
-Automated internal calls — such as the scheduled job that refreshes connected bank data (which runs approximately every six hours) and event webhooks — are authenticated with a **shared webhook secret**, separate from user JWTs.
+Automated internal calls — such as the scheduled jobs that refresh connected data, the secure webhooks from Plaid that notify us of new bank transactions, and Hasura cron/event triggers — are authenticated with a **shared webhook secret**, separate from user JWTs. Plaid webhooks are additionally verified by their cryptographic signature.
 
 ### 7.2 Third-party integration access (user-authorised)
 
