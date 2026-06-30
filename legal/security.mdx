@@ -3,9 +3,9 @@ title: "Information Security Policy"
 description: "Recontrol's information security programme — the technical and organisational measures that protect your data."
 ---
 
-**Effective Date:** 18 June 2026
-**Last Updated:** 18 June 2026
-**Version:** 1.0
+**Effective Date:** 30 June 2026
+**Last Updated:** 30 June 2026
+**Version:** 1.1
 **Review cycle:** Annually, or upon any significant change to systems or law
 
 ---
@@ -25,7 +25,7 @@ The programme is designed in alignment with **ISO/IEC 27001:2022** — the stand
 This policy applies to:
 
 - All information processed by Recontrol, with particular care for **sensitive personal data or information** (which, under the SPDI Rules, includes **financial information** such as account balances, transactions, and holdings);
-- All systems that store or process that information — the mobile and web applications, the Go backend (Connect RPC), the Hasura GraphQL layer, the PostgreSQL database, and supporting cloud services (Nhost, AWS); and
+- All systems that store or process that information — the mobile application, the Go backend (Connect RPC, hosted on Railway in the United States), the Hasura GraphQL layer, the PostgreSQL database (Nhost / AWS ap-south-1, Mumbai), and supporting cloud services; and
 - All personnel and contractors with access to those systems.
 
 It works together with the [Access Controls Policy](/legal/access), the [Data Retention and Disposal Policy](/legal/data), and the [Privacy Policy](/legal/privacy).
@@ -99,7 +99,7 @@ Deleting an encrypted integration token (with no backup retained) constitutes cr
 
 ## 9. Infrastructure and network security
 
-- Recontrol runs on managed cloud infrastructure — **Nhost** on **AWS ap-south-1 (Mumbai, India)**.
+- Recontrol runs on managed cloud infrastructure: the **database and authentication** layer on **Nhost / AWS ap-south-1 (Mumbai, India)**, and the **Go API server** on **Railway (United States)**. All financial data flows through the Go API, which is the single routing and aggregation point; data is processed there in transit and stored at rest in India.
 - The database (PostgreSQL) is accessed through the Hasura GraphQL layer and the backend service; it is not exposed directly to clients.
 - Connection pooling is configured with bounded lifetimes to limit resource exhaustion.
 - Secrets are provided via protected environment configuration and are not stored in the repository.
@@ -109,10 +109,10 @@ Deleting an encrypted integration token (with no backup retained) constitutes cr
 
 ## 10. Logging and monitoring
 
-- Server-side observability uses **OpenTelemetry** and **Prometheus** for performance metrics, API timings, and error rates.
+- Server-side observability is instrumented with **OpenTelemetry** (traces, metrics, and logs) for performance metrics, API timings, and error rates.
 - Logs are written with the discipline of **not recording sensitive personal data** (no plaintext tokens, passwords, or unnecessary financial detail).
 - Operational logs and telemetry are retained for no more than **12 months** and are not linked to individual user profiles.
-- The App contains **no** client-side analytics or behavioural-tracking SDKs.
+- The App includes a single product-analytics SDK, **PostHog** (US Cloud). It captures pseudonymous usage events and device/app metadata to help us improve the App; it **never** receives financial data (balances, transactions, holdings), names, or email addresses, and it can be turned off in **Settings**. We use no advertising SDK, crash-reporting SDK, or cross-app tracking. See the [Privacy Policy](/legal/privacy).
 
 ---
 
@@ -131,9 +131,13 @@ We use a small, deliberately limited set of sub-processors, each with its own se
 | Provider | Role | Assurance |
 |---|---|---|
 | **Nhost** | Auth, database hosting, backend platform | Provider security programme; data in AWS ap-south-1 |
-| **AWS** | Cloud infrastructure | ISO/IEC 27001, SOC 2, NIST-aligned media disposal |
+| **AWS** | Cloud infrastructure (data storage) | ISO/IEC 27001, SOC 2, NIST-aligned media disposal |
+| **Railway** | Application/API server hosting (United States) | Provider security programme; processes data in transit, stores none |
 | **Plaid** | Bank-data aggregation (US/Canada, opt-in) | Regulated financial-data aggregator; governs its own data handling |
 | **Zerodha** (Kite Connect) | Investment-holdings aggregation (India, opt-in) | SEBI-regulated broker; governs its own data handling |
+| **Resend** | Transactional email delivery | Email provider; receives email address and message content |
+| **Expo** (→ Apple APNs / Google FCM) | Push-notification delivery (opt-in) | Receives device push token and notification content |
+| **PostHog** | Product analytics (US Cloud, opt-out) | Receives pseudonymous usage events; no financial data |
 
 New suppliers are assessed for their security posture before integration, and integrations are added to the risk review in Section 4. The data each provider processes is listed in the [Privacy Policy](/legal/privacy).
 

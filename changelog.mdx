@@ -3,15 +3,25 @@ title: "Changelog"
 description: "What's new in Recontrol."
 ---
 
-## In preview
+## Connected accounts, notifications & more
 
-_Not yet generally available_
+_June 2026 — v1.1_
 
-**Connected accounts (optional)** — currently in limited preview
-- Connect banks in the **United States and Canada** via **Plaid** to import balances and transactions automatically (up to two years of history on first connect)
+**Connected accounts (optional)** — now available
+- Connect banks in the **United States and Canada** via **Plaid** to import balances and transactions automatically (up to two years of history on first connect), kept fresh on a schedule and via secure webhooks
 - Connect your **Zerodha** account (India) via Kite Connect to import equity and mutual-fund holdings
 - Bank and broker login credentials are never seen or stored by Recontrol; access tokens are encrypted at rest (AES-256-GCM)
-- Connected accounts refresh automatically and can be disconnected at any time
+- Connected accounts can be disconnected at any time, which revokes and deletes the stored token
+
+**Notifications**
+- Opt-in push notifications for connection and account activity, with per-type controls
+
+**Privacy & analytics**
+- Added **PostHog** product analytics (US cloud) to help us improve the app — pseudonymous, never your financial data, and **opt-out** in Settings
+- Account deletion now runs server-side and sends a confirmation email; sign-in supports email & password, Google, and Apple
+
+**Currency**
+- A new Space's reporting currency is defaulted from your device's region (signup no longer asks for a currency)
 
 ---
 
