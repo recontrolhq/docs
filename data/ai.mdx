@@ -1,0 +1,73 @@
+---
+title: "AI and your data"
+description: "Exactly what leaves Recontrol when you use AI Chat, who processes it, and what is never sent."
+---
+
+[AI Chat](/features/chat) is the only feature that sends any of your financial information to a third-party model provider. This page states precisely what goes, what stays, and what happens to it — because "we use AI" is not a disclosure.
+
+## Who processes it
+
+The model is **Claude**, provided by **Anthropic PBC** in the **United States**. Anthropic acts as our processor for this feature.
+
+Under Anthropic's commercial terms, **Anthropic does not train its models on data sent through its API**, and prompt and response content sent to the messages endpoint is not retained by default once the response has been returned. Anthropic may retain content that its automated trust-and-safety systems flag, or where retention is required by law. See [Anthropic's privacy policy](https://www.anthropic.com/legal/privacy) and their [API data-retention documentation](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention).
+
+If you never open AI Chat, nothing about you is ever sent to Anthropic.
+
+## What is sent
+
+When you ask a question, Recontrol computes a snapshot of figures from your ledger and sends **that snapshot plus your question**. Specifically:
+
+| Sent | Detail |
+|---|---|
+| **Your question** | The text you typed or dictated |
+| **Earlier turns in the same session** | Held on your device and re-sent so follow-ups make sense; capped in length |
+| **Space name and reporting currency** | The space you are asking about |
+| **Totals** | Assets, liabilities, net worth, income, expenses, net flow |
+| **Spending by category** | Category (account) names, amounts, each one's share of the total, the change against the previous month, and the institution name where one applies — for the current month to date and the last complete month |
+| **Goals** | Goal names, target amounts and dates, current value, progress and trajectory |
+| **Accounts** | Account names, types, currencies and current balances |
+| **Opaque identifiers** | Internal record IDs for the space, accounts and goals — random values that mean nothing outside our database |
+
+So the names you have given your accounts, categories and goals **are** part of what is sent, along with the balances and totals computed from them. We say so plainly rather than implying the model sees only anonymous numbers.
+
+## What is never sent
+
+- **Your name, email address, or phone number**
+- **Individual transactions** — no transaction descriptions, no merchant names, no notes, no dates of individual purchases. Only aggregates.
+- **Account numbers**, including the last four digits imported from a bank
+- **Bank or brokerage credentials** — we never hold them in the first place
+- **Any other space** you belong to but are not currently asking about
+
+## What we keep
+
+We store **the text of your question** and whether the exchange succeeded, in our own database, attributed to your account.
+
+We do **not** store the answer, and we do not store the figures that were sent with it. There is no server-side transcript. The conversation you see on screen lives on your device only, for that session.
+
+Your questions are deleted when you delete your account, and you may ask us to erase them at any time by emailing [support@recontrol.money](mailto:support@recontrol.money).
+
+<Note>
+Question text is deliberately kept in our own database and is never sent to our analytics provider. Our analytics contract forbids free text of any kind — see [What we store](/data/storing).
+</Note>
+
+## Voice input
+
+If you ask by voice, the audio is transcribed by **your device's own speech recognition** — Apple's on iOS, Google's on Android. Whether that transcription happens on the device or on the provider's servers is decided by the platform and varies by language and device; Recontrol does not control it and does not claim otherwise.
+
+To help the recogniser handle names it would otherwise mangle, Recontrol supplies **your institution and account names** to the platform recogniser as vocabulary hints while the microphone is open. The microphone is only ever active while you are holding a dictation open, and a dictated question is never sent automatically — you always confirm it.
+
+Recontrol does not record, store, or transmit audio.
+
+## Guardrails
+
+- **The model does no arithmetic.** Every figure in an answer must appear verbatim in the snapshot. It cannot compute, estimate or infer a number of its own, and is instructed to say it does not have a figure rather than invent one.
+- **The model cannot act.** AI Chat is read-only. It has no ability to create, edit, delete or move anything.
+- **Your data is not treated as instructions.** Text inside your ledger — an account name, a category name — is passed to the model as data, explicitly delimited, with an instruction that it is never a command. This is a defence against prompt injection.
+- **No security-level investment data reaches it.** Individual holdings — ISINs, security names, quantities, cost basis — are not part of the snapshot. A connected brokerage account is represented to the model as an account with a balance. Recontrol does not provide investment advice, and AI Chat is not an adviser.
+- **Your own permissions apply.** The snapshot is computed under your own identity, so it contains only what your [role](/features/collaboration) in that space already lets you see.
+
+## Related
+
+- [AI Chat](/features/chat) — how the feature works
+- [What we store](/data/storing) — every category of data we hold
+- [Privacy Policy](/legal/privacy#4a-ai-chat) — the formal disclosure

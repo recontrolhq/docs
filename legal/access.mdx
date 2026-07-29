@@ -3,10 +3,14 @@ title: "Access Controls Policy"
 description: "How access to Recontrol's systems and your data is granted, authenticated, authorised, and reviewed."
 ---
 
-**Effective Date:** 30 June 2026
-**Last Updated:** 30 June 2026
-**Version:** 1.1
+**Effective Date:** 29 July 2026
+**Last Updated:** 29 July 2026
+**Version:** 1.2
 **Review cycle:** Annually, or upon any significant change to systems or law
+
+<Note>
+**Version 1.2 changes:** entitlement (has anyone paid) and permission (may this member) are documented as two separate, non-merged gates (Section 5.4); the AI Chat access boundary is described (Section 5.5); webhook authentication now includes signature verification (Section 7.1); and the offboarding rules were restated — a sole administrator's departure no longer blocks account deletion (Section 8).
+</Note>
 
 ---
 
@@ -90,7 +94,22 @@ A **Space** is an isolated workspace. Data in a Space is visible only to that Sp
 - Administrators invite members by email or phone number; invitations may wait for recipients who have not yet signed up.
 - Members may leave a Space at any time.
 - Administrators may change a member's role or remove a member.
-- A sole administrator must transfer ownership or delete the Space before deleting their account.
+- **A Space is never left without an administrator.** If the last administrator leaves or deletes their account, the longest-standing remaining member is automatically granted an administrator role. If they were the only member, the Space is deleted with them. Neither case blocks their departure or their erasure.
+
+### 5.4 Entitlement and permission are two separate gates
+
+Recontrol evaluates two independent questions, in order, and deliberately does not merge them:
+
+1. **Entitlement** — *has anyone paid for this capability?* Bank connections require the Space to be sponsored by an active subscription; AI Chat requires the caller's own active subscription.
+2. **Permission** — *may this member perform this action?* The resource × action model in Section 5.2.
+
+They are kept apart so that changing a member's role can never move a paywall, and so that a refusal states the correct remedy — obtaining a subscription is a different fix from asking an administrator for access. Refusals carry a machine-readable reason so the App can present the right one.
+
+A failure to *reach* the entitlement record is treated as a transient fault and reported as such, never as "you have not paid": a paying customer is not locked out because a lookup failed. Where a last-known-good verdict is available it is used; where it is not, the request fails as temporarily unavailable rather than as a permission denial.
+
+### 5.5 AI Chat access boundary
+
+AI Chat runs under the **caller's own identity and access token**, so the figures it is given are exactly those the caller's role in that Space already permits them to read. It has **no elevated privilege, no administrative credential, and no write capability of any kind**. Text drawn from a user's own records is passed to the model as delimited data with an explicit instruction that it is never a command, so content inside a ledger cannot be used to redirect the model's behaviour.
 
 ---
 
@@ -107,7 +126,11 @@ A **Space** is an isolated workspace. Data in a Space is visible only to that Sp
 
 ### 7.1 Internal service authentication
 
-Automated internal calls — such as the scheduled jobs that refresh connected data, the secure webhooks from Plaid that notify us of new bank transactions, and Hasura cron/event triggers — are authenticated with a **shared webhook secret**, separate from user JWTs. Plaid webhooks are additionally verified by their cryptographic signature.
+Automated internal calls — such as the scheduled jobs that refresh connected data, the secure webhooks from Plaid that notify us of new bank transactions, the subscription webhooks that report a purchase or renewal, and Hasura cron/event triggers — are authenticated with a **shared webhook secret**, separate from user JWTs.
+
+Webhooks from Plaid and from our subscription provider are subject to **two independent checks, both of which must pass**: a shared secret that authenticates the *caller*, and a cryptographic signature over the raw request body that authenticates the *payload*. A replayed or tampered body therefore fails even if a shared secret were disclosed. In production the service refuses to start if signature verification is not configured.
+
+A subscription webhook is treated as a **notification, not as an authority**: every event triggers an authoritative read from the provider, and the entitlement we record comes from that read rather than from the payload. Entitlement expiry only ever moves forward, so a lost or out-of-order webhook cannot revoke a paying customer's access.
 
 ### 7.2 Third-party integration access (user-authorised)
 
@@ -126,7 +149,7 @@ Integration access tokens are **encrypted at rest (AES-256-GCM)**, are scoped to
 |---|---|
 | **Onboarding / provisioning** | A user self-registers; a personal Space is created automatically. Space membership is granted by invitation. |
 | **Changes** | Role and permission changes within a Space are made by an administrator and take effect immediately. Privileged (admin) access changes are made deliberately and recorded. |
-| **Offboarding / deprovisioning** | Leaving a Space, being removed by an admin, or deleting an account removes the associated access. Account deletion invalidates tokens and cascades the removal of the user's data. |
+| **Offboarding / deprovisioning** | Leaving a Space, being removed by an admin, or deleting an account removes the associated access. Account deletion revokes external integration tokens at the provider, withdraws the user from every Space under the same rules a deliberate departure follows (Section 5.3), invalidates authentication tokens, and removes the user's own data. It is never blocked by an administrative dependency. |
 
 ---
 

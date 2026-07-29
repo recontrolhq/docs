@@ -33,6 +33,9 @@
               "features/spaces",
               "features/insights",
               "features/collaboration",
+              "features/connections",
+              "features/chat",
+              "features/plans",
               "features/budgets",
               "features/splitting"
             ]
@@ -55,6 +58,7 @@
             "group": "Help",
             "pages": [
               "support/faq",
+              "support/billing",
               "support/contact",
               "support/account"
             ]
@@ -79,6 +83,7 @@
             "group": "Data",
             "pages": [
               "data/storing",
+              "data/ai",
               "data/security",
               "data/rights",
               "data/delete"

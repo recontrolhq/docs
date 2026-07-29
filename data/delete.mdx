@@ -7,6 +7,19 @@ description: "How to permanently delete your Recontrol account and all associate
 Deletion is permanent and irreversible. We do not maintain backups. Once your deletion request is processed, your data cannot be recovered by you or by us under any circumstances.
 </Warning>
 
+## Cancel your subscription first
+
+<Warning>
+**Deleting your Recontrol account does not cancel your subscription.** Your subscription belongs to your Apple or Google account, not to Recontrol, so we cannot end it for you. **Cancel it in your app store's subscription settings before you delete your account, or you will keep being charged.**
+</Warning>
+
+If you are subscribed, the app shows this warning during deletion and links straight to your store's subscription settings. You can also reach them directly:
+
+- **iOS** — Settings → your name → Subscriptions
+- **Android** — Play Store → profile → Payments & subscriptions → Subscriptions
+
+Refunds are handled by Apple and Google under their own policies; we cannot issue them.
+
 ## What gets deleted
 
 When your account is deleted, the following is permanently removed from our systems:
@@ -17,14 +30,24 @@ When your account is deleted, the following is permanently removed from our syst
 - All goals you created
 - All data imported from connected institutions (bank accounts, transactions, holdings)
 - All stored integration access tokens — also revoked with the provider (Plaid, Zerodha)
-- All spaces you created, and all data within them
-- Your membership in all shared spaces
+- **Every space where you are the only member**, and all data within it
+- Your membership in every shared space
 - Your role assignments
+- All AI Chat questions you have asked (answers were never stored)
+- Our record of your subscription, your usage counters, and any spaces you sponsored
 - Your settings, country/region, and currency preferences
 - Your registered device push tokens
 - All authentication tokens and session data
 
 Nothing is retained for business purposes after deletion. If you connected a bank or broker, we recommend disconnecting it first; data held by Plaid, Zerodha, or your institution is governed by their own policies.
+
+## What happens to shared spaces
+
+Deletion is **never blocked**, and you are never asked to hand a space over first.
+
+- **Spaces where you are the only member** are deleted along with your account, including everything in them.
+- **Spaces with other members survive.** You are removed from them; their accounts, transactions and history stay, because they belong to the space, not to you. If you were that space's only administrator, **the longest-standing remaining member is promoted to administrator automatically**, so nobody is left with a space they cannot manage.
+- **Spaces you sponsored** stop syncing their bank connections when your subscription record goes. Nothing in them is deleted, and another member can sponsor the space to turn syncing back on.
 
 ## Method 1: Delete from within the app (recommended)
 
@@ -43,7 +66,7 @@ In-app deletion is immediate.
 </Steps>
 
 <Note>
-If you are the sole admin of a shared space, you must transfer ownership to another member or delete the space before account deletion can complete. The app will guide you through this.
+There is nothing to arrange first. Even if you are the only administrator of a shared space, deletion goes ahead — see [What happens to shared spaces](#what-happens-to-shared-spaces).
 </Note>
 
 ## Method 2: Email request

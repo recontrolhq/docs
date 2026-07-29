@@ -1,0 +1,53 @@
+---
+title: "Connected accounts"
+description: "Link a bank or broker once and let balances and transactions import themselves."
+---
+
+Connecting an institution is optional. Manual entry is always available, is the default, and is free forever. A connection simply saves you the typing.
+
+<Note>
+Connected accounts are part of the paid plan. A space's bank connections run on whoever sponsors that space — see [Plans & billing](/features/plans#who-pays-for-what).
+</Note>
+
+## What you can connect
+
+| Provider | What comes in | Where |
+|---|---|---|
+| **Plaid** — banks and card issuers | Account names, types, the last four digits of the account number, balances and currency, and transaction history — up to **730 days (two years)** on first connect | United States and Canada |
+| **Zerodha** (Kite Connect) — broker | Equity and mutual-fund holdings: ISIN, security or fund name, quantity, average price, last price, and profit or loss | India |
+
+One connection covers **every account inside that institution**. Linking a bank with a current account, a savings account and two cards is one connection, not four.
+
+## We never see your login
+
+You authenticate directly with your bank or broker, inside the provider's own flow.
+
+<Warning>
+**Recontrol never receives, sees, or stores your banking or brokerage username, password, PIN, or one-time codes.** That exchange happens between you and Plaid or Zerodha.
+</Warning>
+
+What we store is an access token that lets us refresh your data. It is encrypted at rest with AES-256-GCM on top of the database's own encryption, and it is revoked and deleted the moment you disconnect. See [Security](/data/security).
+
+## Keeping data fresh
+
+- **Bank connections (Plaid)** refresh when Plaid notifies us — by secure, cryptographically verified webhook — that your bank has reported new activity. There is no polling: your data updates when there is something to update. Right after you first connect, the app watches for the initial import and fills in balances and transactions as they land.
+- **Zerodha** holdings sync automatically on a schedule on trading days. Zerodha's access tokens expire **every day** by design, so you will be asked to re-authorise periodically to keep syncing.
+
+## Disconnecting
+
+Disconnect any connection at any time from the app. When you do, we revoke the token with the provider and delete it from our systems.
+
+Accounts, transactions and holdings already imported stay in your space until you delete them — your charts and history do not develop a hole. Disconnecting only stops further syncing.
+
+## Adding a connection
+
+Adding a connection asks one question first: **is anybody's active subscription sponsoring this space?** If nobody is, you will be shown the plan. Any member of the space can put their own subscription behind it — you do not need to find an administrator or the person who created it.
+
+To limit cost and abuse, there is a short-term limit on how many connection attempts one person can make in an hour. Normal use will not reach it.
+
+## Relationships
+
+- A connection belongs to one [Space](/features/spaces).
+- Imported accounts behave exactly like [accounts](/features/accounts) you create by hand.
+- Imported transactions behave exactly like [transactions](/concepts/transactions) you record by hand.
+- Stale connections are flagged in [AI Chat](/features/chat#honest-caveats), so an answer is never computed silently over data that stopped arriving.

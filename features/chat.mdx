@@ -1,0 +1,82 @@
+---
+title: "AI Chat"
+description: "Ask questions about your money in plain language and get answers narrated over figures Recontrol has already computed."
+---
+
+AI Chat lets you ask about your own finances in plain language — by typing or by speaking — and get a short, direct answer. Open it from the **Chat** button on Home.
+
+<Note>
+AI Chat is part of the paid plan. See [Plans & billing](/features/plans).
+</Note>
+
+## What makes it different
+
+Most finance assistants ask a language model to do arithmetic on your data. Recontrol does the opposite: **the app computes every figure, and the model only narrates it.**
+
+Before your question reaches the model, Recontrol assembles a snapshot of figures from your ledger — your net worth, this month's spending by category, last month's spending, your goals and their trajectory, and your account list. The model is instructed that **every number it states must come verbatim from that snapshot**. It cannot sum, estimate, or infer a figure of its own. If answering would need a number the snapshot does not contain, it says so plainly rather than guessing.
+
+A confident wrong number is the worst thing a money app can do. "I don't have that" is always an acceptable answer.
+
+## What it can answer
+
+The snapshot covers **the current month to date and the last complete month**, plus your goals, accounts and balances. Good questions look like:
+
+- "What did I spend the most on last month?"
+- "How am I tracking toward my goals?"
+- "What's my net worth right now?"
+- "Why was June higher than May?"
+
+Ask about any other period and it will tell you it does not have those figures, and answer from the windows it does have.
+
+## What it cannot do
+
+<Warning>
+AI Chat is **read-only**. It cannot create, edit, or delete anything, and it cannot move money. Nothing you say in chat changes your ledger.
+</Warning>
+
+It is also not an adviser. **Your individual investment holdings are never given to it** — a connected brokerage account appears to it as an account with a balance, nothing more — so it has no security-level detail to comment on. Recontrol does not provide investment, tax, or financial advice, and nothing AI Chat says is advice. See [Terms of Service](/legal/terms#14-financial-disclaimers).
+
+## Honest caveats
+
+An answer computed correctly over incomplete data is still wrong, and unlike a made-up number you cannot spot it. Recontrol surfaces three caveats rather than hiding them:
+
+| Caveat | What it means |
+|---|---|
+| **A connection has stopped syncing** | Shown as a banner above the answer, naming the institution and when it last synced, with a link to fix it. It is also spoken before the answer when you use read-aloud. |
+| **Uncategorised money** | Money not yet attributed to a category is excluded from income and expense figures, so those figures understate reality. The answer says so beside the figure, and says which side is affected — money that went out, or money that came in. |
+| **Incomplete currency conversion** | If some amounts could not be converted into your space's reporting currency, the total is approximate and the answer says so. |
+
+When everything is healthy, you get a quiet caption instead — how many connections the figures cover and when they last synced.
+
+## Voice and text
+
+A single toggle in the header switches between the two modes, and your choice is remembered.
+
+- **Voice** — tap the waveform and ask out loud. Your words appear in the composer as you speak, and you can edit them. **A spoken question is never sent automatically** — you always confirm it. Tap the stop square to end dictation.
+- **Text** — a keyboard-first composer.
+
+Speech is converted to text by your device's own speech recognition (Apple or Google, depending on your platform). Whether that happens on-device or on the provider's servers is the platform's decision and varies by language. To help the recogniser get names right, your institution and account names are supplied to it as vocabulary hints. See [What we store](/data/storing) for the privacy detail.
+
+## After an answer
+
+Once an answer has settled you can **copy** it, **share** it, or have it **read aloud**. Read-aloud is opt-in per answer and never starts on its own — figures are never spoken unbidden.
+
+## Conversation history
+
+<Note>
+**Your conversation is not stored on our servers.** The transcript lives on your device for the session and is gone when the app closes. Answers are never saved anywhere.
+</Note>
+
+The one thing we do keep is **the text of your question**, along with whether the exchange succeeded. It is stored in your own account, inside our own database — never with a third-party analytics provider. We use it to learn which questions people actually ask, so we can turn the common ones into features. Your questions are deleted when you delete your account, and you can ask us to erase them at any time. See [What we store](/data/storing#ai-chat).
+
+Because there is no stored history, each session starts fresh. Follow-up questions work within a session — your device re-sends the earlier turns — but yesterday's conversation is gone, and yesterday's answer would be stale against today's ledger anyway.
+
+## Fair use
+
+AI Chat costs us money per question, so there is a generous monthly ceiling to protect against abuse. Ordinary use will not come near it. In the unlikely event you reach it, the app tells you the date it resets. There is also a short-term burst limit — if you fire many questions in a few seconds, you may be asked to wait a moment.
+
+## Relationships
+
+- AI Chat reads one [Space](/features/spaces) at a time — the space you are currently in.
+- It reads only what your [role](/features/collaboration) permits you to see.
+- Access is tied to **your own** subscription, not the space's — see [Plans & billing](/features/plans#who-pays-for-what).

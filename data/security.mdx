@@ -10,6 +10,8 @@ description: "How Recontrol protects your data in transit, at rest, and on your 
 | **Data in transit** | All traffic is encrypted over TLS/HTTPS |
 | **Data at rest** | Database encrypted at rest using AES-256, provided by AWS |
 | **Integration tokens** | Access tokens for connected banks/brokers (Plaid, Zerodha) are additionally encrypted at rest with AES-256-GCM before storage |
+| **Telemetry** | Sensitive fields are stripped at the source, before any monitoring data leaves our systems |
+| **Webhooks** | Incoming webhooks from Plaid and our billing provider are verified cryptographically as well as by a shared secret |
 | **Device storage** | Authentication tokens stored in iOS Keychain / Android Keystore via Expo Secure Store |
 | **App lock** | Optional biometric app lock (Face ID / fingerprint), verified on-device by your operating system |
 | **API authentication** | All requests require a signed JSON Web Token (JWT) |
@@ -23,13 +25,24 @@ For our full security programme, see the [Information Security Policy](/legal/se
 
 When you connect a bank (via Plaid) or your Zerodha account, we **never** receive your login credentials — authentication happens directly with the provider. We store only an access token, encrypted with AES-256-GCM, which you can revoke at any time by disconnecting. See [What we store](/data/storing).
 
+## Payments
+
+Purchases happen entirely inside the Apple App Store or Google Play. **We never see your card number, billing address, or payment details.** What reaches us is only whether an active subscription exists and when it expires. See [Plans & billing](/features/plans).
+
+## Telemetry
+
+Our server-side monitoring is instrumented with **OpenTelemetry** and forwarded to Grafana Cloud through a collector we run ourselves — nothing in the app pushes telemetry directly to a vendor. Sensitive fields are removed **at the source**, before anything is exported, using a deny-by-default allowlist: only an explicitly permitted set of technical fields may be emitted, so a new field added later cannot silently start leaking. Names, amounts, balances, email addresses, tokens and free text are never on that list. Crash reports from the app are stripped the same way — the error type and code locations are kept, the message and any runtime values are not.
+
 ## What we do not do
 
 - We do not store passwords in plaintext — passwords are one-way hashed
 - We do not receive or store your bank or brokerage login credentials
+- We do not receive or store your card or payment details
 - We do not have access to your authentication tokens after they are issued to your device
 - We do not receive your biometric data — the app lock is handled entirely by your device
-- We do not send your financial data (balances, transactions, holdings), name, or email to our analytics tool (PostHog); it only records pseudonymous usage events, and you can turn it off in Settings
+- We do not record or transmit audio — voice questions are transcribed by your device's own speech recognition
+- We do not send your financial data (balances, transactions, holdings), name, or email to our analytics tool (PostHog); it only records pseudonymous usage events and stripped crash reports, and you can turn it off in Settings
+- We do not store AI Chat answers or conversation history on our servers
 - We do not use any advertising SDK or cross-app tracking
 
 ## Limitations
@@ -38,12 +51,16 @@ No system is perfectly secure. Transmission over the internet carries inherent r
 
 ## Data breach notification
 
-In the event of a personal data breach, we will notify the **Data Protection Board of India** and affected users in line with the timelines set out in the **Digital Personal Data Protection Act, 2023** and the **Digital Personal Data Protection Rules, 2025**, and applicable requirements under the **Information Technology Act, 2000**. Our incident-response process is described in the [Information Security Policy](/legal/security).
+In the event of a personal data breach, we will notify affected users and the relevant authorities under the laws that apply to them — the **Data Protection Board of India** under the Digital Personal Data Protection Act, 2023 and its Rules, 2025; state authorities and affected residents in the **United States** under applicable state breach-notification laws; and the **Office of the Privacy Commissioner of Canada** (and the Commission d'accès à l'information for Quebec) where a breach creates a real risk of significant harm. Our incident-response process is described in the [Information Security Policy](/legal/security).
 
 ## Storage location
 
-Your data is **stored at rest in AWS ap-south-1 (Mumbai, India)**. There is no secondary copy or offsite backup in another region. Our **API server is hosted in the United States** (Railway), so your data is processed there in transit while you use the app.
+<Note>
+**Changed 29 July 2026.** Our database moved from AWS ap-south-1 (Mumbai, India) to AWS us-east-1 (Northern Virginia, United States), putting the database in the same country as the API server that reads it.
+</Note>
 
-If you use Recontrol from **outside India** (including the US or Canada), your data is stored in India and processed in both India and the United States. See the [Privacy Policy](/legal/privacy#8-data-storage-location-and-international-data-transfers) for the cross-border disclosure and your regional rights.
+Your data is **stored at rest in AWS us-east-1 (Northern Virginia, United States)**. There is no secondary copy or offsite backup in another region. Our **API server is also hosted in the United States** (Railway), so your data is stored and processed in the same country.
 
-If you connect a bank using **Plaid**, your banking data is processed by Plaid in the **United States** before reaching us in India — this only happens if you choose to use the bank-connection feature.
+If you use Recontrol from **outside the United States** — including Canada, India, or elsewhere — your data is stored and processed in the United States. See the [Privacy Policy](/legal/privacy#8-data-storage-location-and-international-data-transfers) for the cross-border disclosure and your regional rights.
+
+If you connect a bank using **Plaid**, your banking data is processed by Plaid in the **United States** before reaching us — this only happens if you choose to use the bank-connection feature.

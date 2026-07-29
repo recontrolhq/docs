@@ -5,7 +5,19 @@ description: "Answers to the most common questions about Recontrol."
 
 ## Is Recontrol free?
 
-Yes. Recontrol is currently free to download and use. If paid features are introduced in the future, you will be given at least 30 days' notice and will never be charged unless you explicitly opt in.
+**The ledger is free, permanently.** Unlimited accounts, transactions, history, goals, spaces, members, custom roles, multi-currency and reporting — no numeric limits, no trial clock, no payment method required.
+
+Two features cost us money every month on your behalf and require a **paid subscription**: **connected bank and broker accounts**, and **AI Chat**. New subscribers get one free month, and the price is shown in the app before you confirm anything. See [Plans & billing](/features/plans) and the [billing FAQ](/support/billing).
+
+If your subscription ends, nothing is deleted — syncing and chat stop, and your entire ledger stays readable and editable forever.
+
+## What is AI Chat, and is it safe?
+
+AI Chat lets you ask about your own money in plain language. It is **read-only** — it cannot create, edit, delete, or move anything.
+
+It also does no arithmetic: Recontrol computes every figure first, and the model is only allowed to state numbers that appear in what we computed. If it does not have a figure, it says so rather than inventing one.
+
+Your question and a snapshot of computed totals go to **Anthropic** (Claude) to be phrased into an answer. Individual transactions, your name and your email are never sent. **We store your question; we never store the answer**, and there is no conversation history on our servers. Full detail: [AI and your data](/data/ai).
 
 ## Does Recontrol connect to my bank?
 
@@ -18,7 +30,9 @@ These are entirely opt-in. When you connect an account, you authenticate directl
 
 ## Is my financial data private?
 
-Yes. Your data is stored encrypted in Mumbai, India (AWS ap-south-1), and processed by our API server in the United States while you use the app. We do not sell your data and do not run advertising. The app uses one analytics tool, **PostHog**, which records only pseudonymous usage events — never your balances, transactions, name, or email — and you can turn it off in Settings. See our [Privacy Policy](/legal/privacy) for the full picture.
+Yes. Your data is stored encrypted in **Northern Virginia, United States (AWS us-east-1)**, and our API server is in the United States too, so it is stored and processed in the same country. *(Our database was in Mumbai, India until 29 July 2026 — see the [Privacy Policy](/legal/privacy#8-data-storage-location-and-international-data-transfers).)*
+
+We do not sell your data and do not run advertising. The app uses one analytics tool, **PostHog**, which records pseudonymous usage events and stripped crash reports — never your balances, transactions, name, or email — and you can turn it off in Settings. Our server monitoring is filtered at the source, so names, amounts and free text never reach a monitoring vendor. See our [Privacy Policy](/legal/privacy) for the full picture.
 
 ## How do I create a shared space for my household?
 
@@ -30,13 +44,18 @@ Yes. You can set a preferred display currency for each space, and Recontrol conv
 
 ## What happens to my data if I delete my account?
 
-Account deletion is permanent and irreversible. All data associated with your account — including your profile, all financial accounts, all transactions, all goals, all data imported from connected institutions, all stored integration tokens (which are also revoked with the provider), all space memberships, and all settings — is deleted from our servers. We do not retain backups. Once deletion is complete, your data cannot be recovered by you or by us under any circumstances.
+Account deletion is permanent and irreversible. All data associated with your account — including your profile, all financial accounts, all transactions, all goals, all data imported from connected institutions, all stored integration tokens (which are also revoked with the provider), your AI Chat questions, our record of your subscription, all space memberships, and all settings — is deleted from our servers. We do not retain backups. Once deletion is complete, your data cannot be recovered by you or by us under any circumstances.
+
+**Deleting your account does not cancel a subscription.** Cancel it in your app store's settings first, or you will keep being charged.
 
 See [Delete your data](/data/delete) for full details and step-by-step instructions.
 
 ## I am the only admin of a shared space. Can I still delete my account?
 
-Before deleting your account, you must either transfer admin ownership to another member or delete the space entirely. The app will prompt you through this process during the account deletion flow.
+Yes. Deletion is never blocked, and you do not need to hand the space over first.
+
+- A space where you are the **only member** is deleted with your account.
+- A space with **other members survives** — you are removed, everything in it stays, and if you were its only admin, the longest-standing remaining member is promoted to admin automatically.
 
 ## I forgot my password. How do I log in?
 

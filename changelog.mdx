@@ -3,6 +3,40 @@ title: "Changelog"
 description: "What's new in Recontrol."
 ---
 
+## AI Chat, subscriptions & a move to Virginia
+
+_July 2026 — v1.3_
+
+**AI Chat** — new
+- Ask about your money in plain language, by typing or by voice, from the **Chat** button on Home
+- **Recontrol computes every figure; the model only narrates it.** It is instructed to state numbers verbatim from what we computed, never to calculate its own, and to say it does not have a figure rather than guess
+- **Read-only** — it cannot create, edit, delete, or move anything
+- Honest caveats lead the answer: a connection that stopped syncing, money not yet categorised, and totals that could not be fully currency-converted are all flagged rather than hidden
+- Voice mode with editable dictation — a spoken question is never sent without your confirmation — plus copy, share, and opt-in read-aloud on a settled answer
+- **No conversation history is stored on our servers.** The transcript lives on your device for the session only. We keep the text of your question; the answer is never stored. See [AI and your data](/data/ai)
+
+**Plans & billing** — new
+- The ledger stays **free, permanently** — unlimited accounts, transactions, history, spaces, members and custom roles, with no numeric limits
+- A subscription unlocks **connected bank and broker accounts** and **AI Chat**. Auto-categorisation and reports & digests are planned and not yet available
+- Monthly and annual plans, purchased through the App Store or Google Play. **One free month** for new subscribers, once per person, enforced by the stores
+- **Sponsorship** — any member of a shared space can put their own subscription behind it to pay for its bank connections; several people can sponsor the same space, and withdrawing removes nobody and deletes nothing
+- AI Chat runs on **your own** subscription in any space you belong to; bank connections run on whoever sponsors the space
+- If a subscription lapses, syncing and chat stop and **nothing else changes** — your books stay fully readable and editable, forever
+- Restore purchases, manage and cancel through your app store. **Deleting your account does not cancel your subscription** — the app now warns you and links you to your store's settings
+
+**Account deletion**
+- Deletion is **never blocked** by a shared space. A space where you are the only member is deleted with you; a space with other members survives, and if you were its only administrator the longest-standing remaining member is promoted automatically. You no longer have to transfer or delete a space first
+- Connected integrations are revoked at the provider before anything is deleted
+
+**Infrastructure & privacy**
+- **The database moved from AWS ap-south-1 (Mumbai, India) to AWS us-east-1 (Northern Virginia, United States)**, putting it in the same country as the API that reads it. Sessions, sign-ins and installed apps carried across with no action needed. See [Privacy Policy §8](/legal/privacy#8-data-storage-location-and-international-data-transfers)
+- New observability stack — OpenTelemetry traces, metrics and logs through a collector we run ourselves to **Grafana Cloud (US)**, with sensitive fields stripped at the source under a deny-by-default allowlist
+- **Crash and error reporting** through PostHog, covered by the same analytics opt-out. Error messages and runtime values are removed before sending; only the error type and code locations are kept
+- New processors disclosed: **Anthropic** (AI Chat), **RevenueCat** (subscriptions), **Grafana Labs** (monitoring)
+- Privacy Policy, Terms of Service, Information Security Policy, Data Retention and Access Controls policies all updated — see the notes at the top of each
+
+---
+
 ## Connected accounts, notifications & more
 
 _June 2026 — v1.1_

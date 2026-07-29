@@ -16,6 +16,7 @@ description: "A plain-language breakdown of every type of data Recontrol holds, 
 | **Goals** | Goal names, target amounts, target dates, linked accounts | Goal tracking |
 | **Space names** | Names of spaces you create or join | Collaborative workspace management |
 | **Reporting currency** | The display currency for each space. Defaulted from your device's region when a space is created, and changeable in-app | Display formatting and conversion |
+| **AI Chat questions** | The text of questions you ask in [AI Chat](/features/chat) — never the answers | Understanding which questions people ask so we can build them into the product |
 | **Support messages** | Emails you send to support@recontrol.money | Customer support |
 
 ## Data collected automatically
@@ -26,11 +27,19 @@ description: "A plain-language breakdown of every type of data Recontrol holds, 
 | **Session identifiers** | Login timestamps and session IDs | Security |
 | **Country / region** | A two-letter country code from your device's region setting at sign-up (not GPS or IP geolocation); omitted if unavailable | Establishing your country/region for regional privacy rights and defaults |
 | **Device push token** | An Expo push token, device name, and platform — only if you enable notifications | Sending notifications you turn on |
+| **Subscription status** | Whether you hold a plan and when it renews or expires, an anonymous customer identifier issued by our billing provider, your monthly AI usage count, and which spaces you have chosen to sponsor | Unlocking paid features and enforcing fair-use limits |
 | **Product analytics** | Pseudonymous usage events and device/app metadata via PostHog — never your name, email, or financial data; opt-out in Settings | Improving the app |
+| **Crash and error reports** | Uncaught app errors and native crashes via PostHog, with the error *type* and code locations only — messages and runtime values are stripped before sending; covered by the same opt-out as analytics | Fixing bugs |
 | **Basic request metadata** | IP address, user-agent string, request timestamps | Server operation, security monitoring, debugging |
-| **Server-side metrics** | API response times, error rates (instrumented with OpenTelemetry) | Infrastructure monitoring — server-side only, not linked to you personally |
+| **Server-side telemetry** | Traces, metrics and logs from our API — timings, error rates, route names, and opaque internal identifiers such as your user ID. Never names, amounts, balances, emails, or free text | Infrastructure monitoring and debugging |
 
-The app includes one product-analytics tool, **PostHog** (US cloud). It records pseudonymous usage events to help us improve the app and **never** receives your financial data, name, or email. You can turn it off in **Settings**. We use no advertising SDK, crash-reporting SDK, or cross-app tracking.
+**Analytics is limited and optional.** The app includes one product-analytics tool, **PostHog** (US cloud). It records pseudonymous usage events and crash reports to help us improve the app, and **never** receives your financial data, name, or email. You can turn it off in **Settings**, and it is disabled entirely on development builds. We use no advertising SDK and no cross-app tracking.
+
+## AI chat
+
+[AI Chat](/features/chat) sends your question and a snapshot of computed figures to **Anthropic** (Claude) to be narrated back to you. We store your question; we never store the answer, and there is no server-side conversation history.
+
+Exactly what is sent, what is never sent, and what Anthropic does with it is documented separately in [AI and your data](/data/ai).
 
 ## Data from connected institutions (optional)
 
@@ -41,7 +50,17 @@ If you choose to connect an external financial account, we import data from it *
 | **Plaid** (banks) | Account names, types, last 4 digits of the account number, balances, currency, and up to 2 years of transactions (amount, date, description, merchant, pending status), plus your institution's name | United States & Canada |
 | **Zerodha** (Kite Connect) | Equity and mutual-fund holdings (ISIN, name, quantity, average price, last price, P&L) and your Zerodha user ID, name, and email | India |
 
-We store an access token for each connected integration so we can refresh your data. These tokens are **encrypted at rest using AES-256-GCM**, on top of the database's own encryption. You can disconnect at any time, which revokes and deletes the token. See [Security](/data/security).
+We store an access token for each connected integration so we can refresh your data. These tokens are **encrypted at rest using AES-256-GCM**, on top of the database's own encryption. You can disconnect at any time, which revokes and deletes the token. See [Security](/data/security) and [Connected accounts](/features/connections).
+
+## Subscriptions and payments
+
+<Warning>
+**We never see, receive, or store your card or payment details.** Purchases are made entirely inside the Apple App Store or Google Play. Your payment method belongs to your store account.
+</Warning>
+
+Purchases are processed by **Apple** or **Google** and reconciled through **RevenueCat**, our subscription-management provider. What reaches us is only: whether an active plan exists, when it expires, and an opaque customer identifier. No card number, no billing address, no transaction amounts.
+
+RevenueCat receives an anonymous app user identifier, your device type and operating system, and the store's own purchase receipt or token. It acts as our processor and stores that data in the United States.
 
 ## Data we do not collect
 
@@ -50,28 +69,39 @@ We store an access token for each connected integration so we can refresh your d
 - Photos or camera access
 - Advertising identifiers (IDFA or similar)
 - Your bank or brokerage login credentials (authentication is handled by Plaid / Zerodha — we never see them)
+- Your card or payment details (handled entirely by Apple and Google)
+- Audio recordings — voice questions are transcribed by your device's own speech recognition and we receive only the resulting text
 - Biometric data (the optional app lock uses your device's on-device biometrics; the data never reaches us)
 
 ## Where your data lives
 
-Recontrol's **database is hosted on Amazon Web Services (AWS) in the ap-south-1 (Mumbai, India) region** (via Nhost). The data you enter, and the data we import on your behalf, is stored at rest in India. Our **application/API server is hosted in the United States** (on Railway), so your data is processed there in transit while you use the app.
+<Note>
+**Changed 29 July 2026.** Recontrol's database moved from AWS ap-south-1 (Mumbai, India) to **AWS us-east-1 (Northern Virginia, United States)**. Nothing about what we collect changed — only where it is stored. See the [Privacy Policy](/legal/privacy#8-data-storage-location-and-international-data-transfers).
+</Note>
 
-**If you are outside India** (including in the US or Canada), your data is stored in India and processed in both India and the United States. We stay accountable for protecting it wherever it is processed. See the [Privacy Policy](/legal/privacy#8-data-storage-location-and-international-data-transfers) for the full cross-border disclosure and your regional rights.
+Recontrol's **database is hosted on Amazon Web Services in the us-east-1 (Northern Virginia, United States) region**, via Nhost. The data you enter, and the data we import on your behalf, is stored at rest in the United States. Our **application/API server is also hosted in the United States** (on Railway), so your data is processed in the same country it is stored in.
 
-**Plaid processing:** if you connect a bank using **Plaid**, your banking data is processed by Plaid on infrastructure in the **United States** before it reaches us in India. This only happens if you choose to use the bank-connection feature.
+**If you are outside the United States** — including in Canada, India, or elsewhere — your data is stored and processed in the United States. We stay accountable for protecting it wherever it is processed. See the [Privacy Policy](/legal/privacy#8-data-storage-location-and-international-data-transfers) for the full cross-border disclosure and your regional rights.
+
+**Plaid processing:** if you connect a bank using **Plaid**, your banking data is processed by Plaid on infrastructure in the **United States** before it reaches us. This only happens if you choose to use the bank-connection feature.
 
 ## Third-party services
 
 | Service | Provider | What they receive | Purpose |
 |---|---|---|---|
 | **Nhost** | Nhost | Email, password hash, display name, phone number, session tokens, financial data | Authentication, database hosting (PostgreSQL via Hasura) |
-| **AWS** (via Nhost) | Amazon | All data stored in the database (encrypted at rest) | Cloud storage in Mumbai, India |
+| **AWS** (via Nhost) | Amazon | All data stored in the database (encrypted at rest) | Cloud storage in Northern Virginia, United States |
 | **Railway** | Railway | Data in transit through our API (processed, not stored) | Hosting our API server (United States) |
 | **Plaid** | Plaid Inc. | Bank account and transaction data — only if you connect a bank | Bank-account aggregation (US/Canada) |
 | **Zerodha** | Zerodha (Kite Connect) | Investment-holdings data — only if you connect Zerodha | Investment-holdings aggregation (India) |
+| **Anthropic** | Anthropic PBC | Your AI Chat question and a computed snapshot of your figures — only if you use AI Chat | Generating chat answers (United States) |
+| **RevenueCat** | RevenueCat, Inc. | An anonymous customer identifier, device type and OS, and the store purchase receipt — only if you subscribe | Subscription management (United States) |
+| **Apple / Google** (payments) | Apple; Google | Your purchase and payment details — handled entirely by them; we receive none of it | Processing in-app purchases |
+| **Apple / Google** (speech) | Apple; Google | Spoken audio and vocabulary hints, while a voice question is being dictated | Converting speech to text (on-device or provider-side, per platform) |
 | **Resend** | Resend | Your email address and email content | Transactional email (US) |
 | **Expo** (push) | Expo → Apple/Google | Device push token and notification content — only if you enable notifications | Push-notification delivery (US) |
-| **PostHog** | PostHog | Pseudonymous usage events and device metadata — no financial data; only if analytics is on | Product analytics (US cloud) |
+| **PostHog** | PostHog | Pseudonymous usage events, crash reports and device metadata — no financial data; only if analytics is on | Product analytics and error tracking (US cloud) |
+| **Grafana Labs** | Grafana Labs | Server-side traces, metrics and logs — opaque identifiers, timings and error codes; no names, amounts, or free text | Infrastructure monitoring (Grafana Cloud, United States) |
 | **exchangerate-api.com** | ExchangeRate-API | Currency codes only — no personal data | Exchange rates |
 | **Apple / Google** (sign-in) | Apple; Google | Your name and email — only if you use that sign-in | Authentication |
 
@@ -82,9 +112,12 @@ We use no advertising services, cross-app tracking, social-media pixels, or data
 The mobile app uses:
 
 - **Expo Secure Store** — stores authentication tokens using iOS Keychain / Android Keystore. Not accessible to other apps.
-- **AsyncStorage** — persists session state locally.
+- **AsyncStorage** — persists session state and cached data locally.
+- **PostHog local storage** — if analytics is enabled, a pseudonymous identifier and a small event queue.
+- **RevenueCat local cache** — your subscription status, so the app knows what you have paid for without a network round trip.
+- **Your AI Chat transcript** — held in memory for the session only, and gone when the app closes.
 
-These are used to keep you logged in and to cache data locally. If analytics is enabled, the PostHog SDK also stores a pseudonymous identifier and a small event queue on your device. None of this is used for advertising or cross-app tracking.
+None of this is used for advertising or cross-app tracking.
 
 ## How long we keep it
 
@@ -94,9 +127,11 @@ These are used to keep you logged in and to cache data locally. If analytics is 
 | Financial data (accounts, transactions, goals) | Until you delete your account |
 | Imported data (bank accounts, transactions, holdings) | Until you delete it, disconnect the source, or delete your account |
 | Integration access tokens | Until you disconnect or delete your account; Zerodha tokens also expire daily |
-| Authentication tokens | Short-lived; expire automatically. Invalidated on logout or deletion. |
+| AI Chat questions | Until you delete your account, or ask us to erase them. Answers are never stored |
+| Subscription status and usage counters | Until you delete your account. Your monthly AI usage counter resets on the 1st of each month |
+| Authentication tokens | Short-lived; expire automatically. Invalidated on logout or deletion |
 | Session data | Duration of the active session |
-| Server-side operational metrics | Up to 12 months, then deleted or anonymised. Not linked to individual users. |
+| Server-side telemetry and operational logs | Up to 12 months, then deleted or anonymised. Not linked to individual user profiles |
 | Support communications | Up to 24 months after last communication |
 
 See the [Data Retention and Disposal Policy](/legal/data) for full detail.

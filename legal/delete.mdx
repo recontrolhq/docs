@@ -17,6 +17,19 @@ We do not maintain backups of user data. Once your deletion request is processed
 
 ---
 
+## Before you delete: cancel your subscription
+
+<Warning>
+**Deleting your Recontrol account does not cancel your subscription.** A subscription is held by your Apple or Google account, not by Recontrol, so we have no ability to cancel it for you. **Cancel it in your app store's subscription settings first, or you will continue to be charged.**
+
+- **iOS** — Settings → your name → Subscriptions
+- **Android** — Play Store → profile → Payments & subscriptions → Subscriptions
+</Warning>
+
+Refunds are administered by Apple and Google under their own policies; we never receive your payment and cannot issue one.
+
+---
+
 ## What gets deleted
 
 When your account is deleted, the following is **permanently and completely removed** from our systems:
@@ -27,14 +40,16 @@ When your account is deleted, the following is **permanently and completely remo
 - All goals you created
 - All data imported from connected institutions (bank accounts, transactions, and investment holdings)
 - All stored integration access tokens (Plaid, Zerodha) — these are also revoked with the provider
-- All Spaces you created (and all data within those Spaces)
+- All questions you asked in AI Chat (answers were never stored)
+- Our record of your subscription, your usage counters, and any Spaces you sponsored
+- Every Space in which you are the **only member**, and all data within it
 - Your membership in all shared Spaces
 - Your role assignments
 - Your settings, country/region, and currency preferences
 - Your registered device push tokens
 - All authentication tokens and session data
 
-**Nothing is retained.** We do not keep any backup copy of your data. Recontrol stores your data in India (AWS ap-south-1, Mumbai) and there is no secondary copy.
+**Nothing is retained.** We do not keep any backup copy of your data. Recontrol stores your data in the United States (AWS us-east-1, Northern Virginia) and there is no secondary copy.
 
 <Note>
 **Connected accounts.** If you connected a bank (via Plaid) or your Zerodha account, we recommend disconnecting those integrations before deleting your account. Deleting your account revokes and deletes the access tokens we hold, but data held by Plaid, Zerodha, or your financial institution is governed by their own privacy policies and retention practices.
@@ -42,9 +57,21 @@ When your account is deleted, the following is **permanently and completely remo
 
 ---
 
+## What happens to shared Spaces
+
+Deletion is **never blocked**, and you are not required to hand a Space over first.
+
+- **A Space in which you are the only member** is deleted with your account, together with everything in it.
+- **A Space with other members is not deleted.** You are removed from it; its accounts, transactions and history remain, because they are also other members' records. If you were the Space's only administrator, the longest-standing remaining member is granted an administrator role automatically, so nobody is left with a Space they cannot manage.
+- **A Space you sponsored** stops syncing its bank connections. Nothing in it is deleted, and any other member may sponsor it to resume syncing.
+
+---
+
 ## What is NOT deleted
 
-In rare cases required by applicable Indian law, we may retain minimal records — for example, records required by a court order or law enforcement process. We will not retain any data beyond what is legally mandated, and we will never retain data for business purposes after account deletion.
+Your app store subscription (see above) — cancel it yourself.
+
+In rare cases required by applicable law, we may retain minimal records — for example, records required by a court order or law enforcement process. We will not retain any data beyond what is legally mandated, and we will never retain data for business purposes after account deletion.
 
 ---
 
@@ -68,7 +95,7 @@ Deleting from within the app is immediate.
 </Steps>
 
 <Note>
-**If you are the sole admin of a shared Space**, you must either transfer admin ownership to another member or delete the Space before account deletion can complete. The app will prompt you through this step.
+**If you are the sole admin of a shared Space**, deletion still goes ahead — nothing needs to be transferred first. See [What happens to shared Spaces](#what-happens-to-shared-spaces).
 </Note>
 
 ---
