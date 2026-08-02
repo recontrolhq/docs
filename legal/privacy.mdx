@@ -139,6 +139,8 @@ AI Chat is an **optional** feature that lets you ask questions about your own fi
 
 The model is **Claude**, provided by **Anthropic PBC**, in the **United States**. Anthropic acts as our processor for this feature.
 
+Before you can subscribe, the subscription screen asks you to turn on **AI Answers**. The switch is off until you turn it on, its caption names Anthropic and lists what is sent, and no data reaches Anthropic unless it is on.
+
 Under Anthropic's commercial terms, **Anthropic does not train its models on data sent through its API**, and prompt and response content sent to the messages endpoint is not retained by default once the response has been returned. Anthropic may retain content flagged by its automated trust-and-safety systems, or where retention is required by law. Anthropic's handling of this data is governed by the [Anthropic Privacy Policy](https://www.anthropic.com/legal/privacy) and its published [API data-retention documentation](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention).
 
 ### 4A.2 What is sent to the model
@@ -147,17 +149,18 @@ We do **not** send your ledger. Before your question reaches the model, our back
 
 - your question, and the earlier turns of the same on-device session;
 - the Space's name and reporting currency;
+- the names and reporting currencies of your other Spaces, where you have more than one — so an answer can say which Space a figure belongs to and name the alternatives when a question is ambiguous. No figures from those Spaces are sent;
 - totals: assets, liabilities, net worth, income, expenses, net flow;
 - spending by category for the current month to date and the last complete month — category (account) names, amounts, each category's share, the change against the previous month, and the institution name where one applies;
 - your goals: names, target amounts and dates, current value, progress and trajectory;
 - your accounts: names, types, currencies and current balances;
-- opaque internal record identifiers for the Space, accounts and goals.
+- opaque internal record identifiers for the Spaces, accounts and goals named above.
 
 The names you have given your accounts, categories and goals therefore form part of what is sent, together with the balances computed from them.
 
 ### 4A.3 What is never sent to the model
 
-Your name, email address, or phone number; **individual transactions** (no descriptions, merchant names, notes, or individual dates — aggregates only); account numbers, including the last four digits imported from a bank; any banking or brokerage credential; and any Space other than the one you are asking about.
+Your name, email address, or phone number; **individual transactions** (no descriptions, merchant names, notes, or individual dates — aggregates only); account numbers, including the last four digits imported from a bank; any banking or brokerage credential; and any figures from a Space other than the one you are asking about (the names of your other Spaces are included — see Section 4A.2).
 
 ### 4A.4 What we store
 
@@ -362,7 +365,7 @@ Under the Digital Personal Data Protection Act, 2023 and applicable Indian law, 
 - **Correction:** Request correction of inaccurate or incomplete personal data, and completion or updating of your data
 - **Erasure:** Request deletion of your personal data (see Section 11)
 - **Data portability / export:** Request a copy of your data in a portable format
-- **Withdraw consent:** Where processing is based on consent, withdraw your consent at any time (including by disconnecting an integration)
+- **Withdraw consent:** Where processing is based on consent, withdraw your consent at any time (including by disconnecting an integration). **For AI Chat**, nothing is sent to Anthropic except when you ask a question, so not using the feature withholds it entirely; the **AI Answers** grant itself (Section 4A.1) is asked once, at subscription, and there is no separate in-app control to switch it off afterwards — email us and we will record the withdrawal and erase your stored questions
 - **Opt out of analytics:** Turn off product analytics and crash reporting at any time from the App's **Settings**
 - **Erase your AI Chat questions:** Ask us to delete the questions you have asked in AI Chat. We never store the answers
 - **Grievance redressal:** Raise a complaint with our Grievance Officer (Section 17), which we will address within the timeframe required by law
